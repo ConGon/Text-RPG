@@ -56,6 +56,8 @@ randomEncounters = {
 plrName = str(input("What is your name"))
 
 def gameLoop():
+
+# hello boy
     
 
     
