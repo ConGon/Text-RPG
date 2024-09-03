@@ -19,7 +19,7 @@ playerData = {
     "Stats":{
         "Health": 100,
         "Attack": 10,
-        "Defence": 5,
+        "Defence": 1, 
         "Agility": 10,
         "Level": 0,
         "Exp": 0,
@@ -112,12 +112,13 @@ def gameLoop():
     global questStep
     if questStep == 0:
         print("This is the first step of your adventure!\nBe sure to prepare for a harsh trek ahead!")
-        print("Within any input box, you can say (H) for help")
+        print("")
 
         while True:
-            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R): "))
+            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R), Help(H): "))
 
             if playerChoice == "M": 
+                questStep += 1                
                 moveForward()
                 break
 
@@ -132,6 +133,9 @@ def gameLoop():
             elif playerChoice == "R":
                 rest()  
                 break
+
+            elif playerChoice == "H":
+                print("player chose help")
 
             else:
                 print("Invalid input")
@@ -182,7 +186,7 @@ def moveForward():
 
 def inventory():
     print("Player opened inventory")
-
+    print(playerData["Inventory"])
 def equip():
     print("Player opened equip menu")
 
@@ -194,21 +198,31 @@ def combat(enemySelected):
     stunChance = playerData["Stats"]["Defence"] * 2
 
     while playerData["Stats"]["Health"] >= 0:
-        playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Help(H)"))
+        playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Help(H): "))
 
         if playerAtkChoice == "A":
             playerDamage = playerData["Stats"]["Attack"] + playerData["EquippedItems"]["Weapon"][2]
 
-            enemyProperties["Stats"]["Health"] -= playerDamage
-            playerData["Stats"]["Health"] -= enemyProperties["Stats"]["Attack"]
+            enemyProperties["Stats"]["Health"] -= playerDamage # hit enemy 
+    
+            if enemyProperties["Stats"]["Attack"] <= playerData["Stats"]["Defence"]:
+                playerData["Stats"]["Health"] -= 1
+
+                print("You did:", playerDamage, "damage to the enemy, but the enemy did 1 damage to you!")
+                print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
+                
+            else:
+                (playerData["Stats"]["Health"] + playerData["Stats"]["Defence"]) -= enemyProperties["Stats"]["Attack"] # enemy hit player
+                
 
 
-
-            print("You did:", playerDamage, "damage to the enemy, but the enemy did", enemyProperties["Stats"]["Attack"], "damage to you!")
-            print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
-
+                
         elif playerAtkChoice == "D":
             print("Player Defended!")
+            stun = random.randint(0, 100)
+            
+            if stun >= stunChance:
+                print("You dodged the enemy!")
         
         elif playerAtkChoice == "R":
             print("Player tried to run!")
@@ -232,22 +246,6 @@ def combat(enemySelected):
                 break
             else:
                 print("no drops :(")
-
-        #         "Goblin": {
-        # "Stats":{
-        #     "Health": 25,
-        #     "Attack": 5,
-        #     "Agility": 25,
-        #     "ExpValue": 10
-        # },
-
-        # "Drops":{
-        #     "RustyDagger": ("RustyDagger", "Melee", 5),
-        #     "MustySkullcap": ("MustySkullcap", "Armor", "Head", 2)
-            
-        # },
-
-          
                 gameLoop()
                 break
             
