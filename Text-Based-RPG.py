@@ -1,12 +1,5 @@
 import math, random, time
 
-# my_dict = {
-#     'name': 'Alice',
-#     'age': 30,
-#     'city': 'New York'
-# }
-# print (my_dict['name'])
-
 levelData = [
     100,
     200,
@@ -108,6 +101,16 @@ questStep = 0
 # the player must fight a final boss with the random items they
 # aquired.
 
+def inventory():
+    print("Player opened inventory")
+    print(playerData["Inventory"])
+    
+def equip():
+    print("Player opened equip menu")
+
+def rest():
+    print("Player rested")
+
 def gameLoop():
     global questStep
     if questStep == 0:
@@ -135,8 +138,24 @@ def gameLoop():
                 break
 
             elif playerChoice == "H":
-                print("player chose help")
+                while True:
+                    helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip(E), Rest(R)"))
+                
+                    if helpMoveInput == "M":
+                        print("Moves you forward. __ % chance for enemy encounter, % chance for random event.\n Also increases the quest step, until step 20, where you fight the final boss.")
+                    
+                    elif helpMoveInput == "I":
+                        print("Shows all items within your inventory.")
 
+                    elif helpMoveInput == "E":
+                        print("Allows you to equip weapons and armor.")
+
+                    elif helpMoveInput == "R":
+                        print("Allows you to rest for a turn, which heals you 25% of your health\n Has a chance of enemy ambush")
+                    
+                    else:
+                        print("Invalid input")
+                        
             else:
                 print("Invalid input")
 
@@ -146,7 +165,7 @@ def gameLoop():
     else:
         while True:
             playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R): "))
-
+            
             if playerChoice == "M": 
                 moveForward()
                 break
@@ -162,6 +181,9 @@ def gameLoop():
             elif playerChoice == "R":
                 rest()  
                 break
+
+            elif playerChoice == "H":
+                print("help")
 
             else:
                 print("Invalid input")
@@ -183,22 +205,12 @@ def moveForward():
         print("You encountered a", enemySelected)
         combat(enemySelected)
 
-
-def inventory():
-    print("Player opened inventory")
-    print(playerData["Inventory"])
-def equip():
-    print("Player opened equip menu")
-
-def rest():
-    print("Player rested")
-
 def combat(enemySelected):
     enemyProperties = enemies[enemySelected]
     stunChance = playerData["Stats"]["Defence"] * 2
 
     while playerData["Stats"]["Health"] >= 0:
-        playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Help(H): "))
+        playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Stats(S), Help(H): "))
 
         if playerAtkChoice == "A":
             playerDamage = playerData["Stats"]["Attack"] + playerData["EquippedItems"]["Weapon"][2]
@@ -212,10 +224,7 @@ def combat(enemySelected):
                 print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
                 
             else:
-                (playerData["Stats"]["Health"] + playerData["Stats"]["Defence"]) -= enemyProperties["Stats"]["Attack"] # enemy hit player
-                
-
-
+                print("noob") # enemy hit player
                 
         elif playerAtkChoice == "D":
             print("Player Defended!")
@@ -227,9 +236,33 @@ def combat(enemySelected):
         elif playerAtkChoice == "R":
             print("Player tried to run!")
 
+        elif playerAtkChoice == "S":
+            print(playerData["Stats"])
+
         elif playerAtkChoice == "H":
             print("Player used help!")
-        
+
+            while True:
+                helpAttackInput = str.upper(input("Help with: Attack(A), Defend(D), Run(R), Stats(S), Exit(X): "))
+                if helpAttackInput == "A":
+                    print("Attacks the enemy, the enemy also attacks you.")
+
+                elif helpAttackInput == "D":
+                    print("Defends against the enemy. Has a chance to stun enemy for a turn")
+
+                elif helpAttackInput == "R":
+                    print("Has a chance to run from an enemy, and exit the encounter")
+                
+                elif helpAttackInput == "S":
+                    print("Shows you your current stats.")
+
+                elif helpAttackInput == "X":
+                    print("You exited help")
+                    combat(enemySelected)
+
+                else:
+                    print("Invalid input")
+
         else:
             print("Invalid input")
 
