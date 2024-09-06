@@ -12,7 +12,7 @@ playerData = {
     "Stats":{
         "Health": 100,
         "Attack": 10,
-        "Defence": 1, 
+        "Defence": 5, 
         "Agility": 10,
         "Level": 0,
         "Exp": 0,
@@ -27,9 +27,6 @@ playerData = {
         "Slot4": None,
         "Slot5": None,
         "Slot6": None,
-        "Slot7": None,
-        "Slot8": None,
-        "Slot9": None,
     },
 
     "EquippedItems":{
@@ -104,12 +101,18 @@ questStep = 0
 def inventory():
     print("Player opened inventory")
     print(playerData["Inventory"])
-    
+    print(questStep)
+    gameLoop()
+
 def equip():
     print("Player opened equip menu")
+    print(playerData["EquippedItems"])
 
 def rest():
     print("Player rested")
+    playerData["Stats"]["Health"] *= 1.25
+    print("Your health is now", playerData["Stats"]["Health"])
+    moveForward()
 
 def gameLoop():
     global questStep
@@ -126,18 +129,22 @@ def gameLoop():
                 break
 
             elif playerChoice == "I":
+                questStep += 1  
                 inventory()
                 break
 
             elif playerChoice == "E":
+                questStep += 1  
                 equip()
                 break
 
             elif playerChoice == "R":
+                questStep += 1  
                 rest()  
                 break
 
             elif playerChoice == "H":
+                questStep += 1  
                 while True:
                     helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip(E), Rest(R)"))
                 
@@ -155,7 +162,7 @@ def gameLoop():
                     
                     else:
                         print("Invalid input")
-                        
+
             else:
                 print("Invalid input")
 
@@ -167,6 +174,7 @@ def gameLoop():
             playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R): "))
             
             if playerChoice == "M": 
+                questStep += 1  
                 moveForward()
                 break
                 
@@ -179,6 +187,7 @@ def gameLoop():
                 break
 
             elif playerChoice == "R":
+                questStep += 1  
                 rest()  
                 break
 
@@ -195,6 +204,7 @@ def moveForward():
     print("Number generated was", enemyOrEvent)
 
     print("Player moved forward")
+    
     if enemyOrEvent >= 90:
 
         eventSelected = random.choice(list(randomEvents.keys()))
@@ -207,7 +217,7 @@ def moveForward():
 
 def combat(enemySelected):
     enemyProperties = enemies[enemySelected]
-    stunChance = playerData["Stats"]["Defence"] * 2
+    stunChance = playerData["Stats"]["Defence"] * 3
 
     while playerData["Stats"]["Health"] >= 0:
         playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Stats(S), Help(H): "))
@@ -224,14 +234,18 @@ def combat(enemySelected):
                 print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
                 
             else:
-                print("noob") # enemy hit player
+                print("You did:", playerDamage, "damage to the enemy, but the enemy did 1 damage to you!") # enemy hit player
+                print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
                 
         elif playerAtkChoice == "D":
             print("Player Defended!")
             stun = random.randint(0, 100)
             
-            if stun >= stunChance:
+            if stun <= stunChance:
                 print("You dodged the enemy!")
+
+            else:
+                print("Enemy hit you")
         
         elif playerAtkChoice == "R":
             print("Player tried to run!")
