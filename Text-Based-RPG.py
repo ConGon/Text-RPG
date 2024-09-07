@@ -1,5 +1,9 @@
 import math, random, time
 
+defaultHealth = 100
+questStep = 0
+enemyStunned = False
+
 levelData = [
     100,
     200,
@@ -10,9 +14,9 @@ levelData = [
 
 playerData = {
     "Stats":{
-        "Health": 100,
+        "Health": 0,
         "Attack": 10,
-        "Defence": 5, 
+        "Defence": 0, 
         "Agility": 10,
         "Level": 0,
         "Exp": 0,
@@ -51,13 +55,16 @@ enemies = {
         },
 
         "Drops":{
-            "RustyDagger": ("RustyDagger", "Melee", 5),
-            "MustySkullcap": ("MustySkullcap", "Armor", "Head", 2)
+            "Rusty Dagger": ("Rusty Dagger", "Melee", 5),
+            "Musty Skullcap": ("Musty Skullcap", "Armor", "Head", 2)
             
         },
 
+        "DefaultHealth": 25,
+
         "DropChance": 50
     },
+
     "Skeleton": {
         "Stats":{
             "Health": 50,
@@ -67,9 +74,11 @@ enemies = {
         },
 
         "Drops":{
-            "OldShortsword": ("melee", 10),
-            "BruisedIronLeggings": ("Armor", "Legs", 5)
+            "Old Shortsword": ("melee", 10),
+            "Bruised Iron Leggings": ("Armor", "Legs", 5)
         },
+
+        "DefaultHealth": 50,
 
         "DropChance": 25
     }
@@ -78,20 +87,22 @@ enemies = {
 
 # EXP, GOLD, ATTACK
 randomEvents = {
-    "TreasureChest": {
+    "Treasure Chest":{
         "Exp": 0,
-        "Gold:": 25
+        "Gold": 25,
+        "Attack": 0,
+        "HealthRestore": False
     },
-    "AncientStatue": {
+    "Ancient Statue": {
         "Exp": 100,
-        "Attack": 5
+        "Gold": 10,
+        "Attack": 1,
+        "HealthRestore": True
     }
 }
+
 # random_item = random.choice(list(plrData.keys()))
-
 # randomChoice = plrData[random_item]
-
-questStep = 0
 
 # whenever the player moves forward, 75% chance of random event
 # 25% chance of enemy encounter. After a certain number of turns,
@@ -113,6 +124,28 @@ def rest():
     playerData["Stats"]["Health"] *= 1.25
     print("Your health is now", playerData["Stats"]["Health"])
     moveForward()
+
+def help():
+    while True:
+        helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip(E), Rest(R), Exit(X): "))
+
+        if helpMoveInput == "M":
+            print("Moves you forward. % chance for enemy encounter, % chance for random event.\n Also increases the quest step, until step 20, where you fight the final boss.")
+        
+        elif helpMoveInput == "I":
+            print("Shows all items within your inventory.")
+
+        elif helpMoveInput == "E":
+            print("Allows you to equip weapons and armor.")
+
+        elif helpMoveInput == "R":
+            print("Allows you to rest for a turn, which heals you 25% of your health\n Has a chance of enemy ambush")
+        
+        elif helpMoveInput == "X":
+            gameLoop()
+
+        else:
+            print("Invalid input")
 
 def gameLoop():
     global questStep
@@ -145,24 +178,7 @@ def gameLoop():
 
             elif playerChoice == "H":
                 questStep += 1  
-                while True:
-                    helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip(E), Rest(R)"))
-                
-                    if helpMoveInput == "M":
-                        print("Moves you forward. __ % chance for enemy encounter, % chance for random event.\n Also increases the quest step, until step 20, where you fight the final boss.")
-                    
-                    elif helpMoveInput == "I":
-                        print("Shows all items within your inventory.")
-
-                    elif helpMoveInput == "E":
-                        print("Allows you to equip weapons and armor.")
-
-                    elif helpMoveInput == "R":
-                        print("Allows you to rest for a turn, which heals you 25% of your health\n Has a chance of enemy ambush")
-                    
-                    else:
-                        print("Invalid input")
-
+                help()
             else:
                 print("Invalid input")
 
@@ -192,56 +208,77 @@ def gameLoop():
                 break
 
             elif playerChoice == "H":
-                print("help")
+                help()
 
             else:
                 print("Invalid input")
         
 def moveForward():
-    global questStep 
+    global questStep, defaultHealth
     enemyOrEvent = random.randint(0, 100)
     questStep += 1
-    print("Number generated was", enemyOrEvent)
-
     print("Player moved forward")
     
-    if enemyOrEvent >= 90:
+    if enemyOrEvent >= 90: #Encountered Random Event:
 
         eventSelected = random.choice(list(randomEvents.keys()))
         eventProperties = randomEvents[eventSelected]
-        print("Player did not encounter enemy")
-    else:
+
+        print("You happened upon an", eventSelected)
+        playerData["Stats"]["Exp"] += eventProperties["Exp"]
+        playerData["Stats"]["Gold"] += eventProperties["Gold"]
+        playerData["Stats"]["Attack"] += eventProperties["Attack"]
+
+        if eventProperties["HealthRestore"]:
+            playerData["Stats"]["Health"] = defaultHealth
+            print("restored health")
+            gameLoop()
+
+        else:
+            gameLoop()
+        
+
+    else: #Encountered Enemy
         enemySelected = random.choice(list(enemies.keys()))
         print("You encountered a", enemySelected)
         combat(enemySelected)
 
 def combat(enemySelected):
+    global enemyStunned
     enemyProperties = enemies[enemySelected]
     stunChance = playerData["Stats"]["Defence"] * 3
 
-    while playerData["Stats"]["Health"] >= 0:
+    while playerData["Stats"]["Health"] > 0:
         playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Stats(S), Help(H): "))
 
         if playerAtkChoice == "A":
             playerDamage = playerData["Stats"]["Attack"] + playerData["EquippedItems"]["Weapon"][2]
-
             enemyProperties["Stats"]["Health"] -= playerDamage # hit enemy 
-    
-            if enemyProperties["Stats"]["Attack"] <= playerData["Stats"]["Defence"]:
+
+            if enemyStunned:
+                print("The enemy was stunned, they couldn't attack!")
+                print("You did", playerDamage ,"damage to the enemy, the enemies health is:", enemyProperties["Stats"]["Health"])
+                enemyStunned = False
+
+            elif enemyProperties["Stats"]["Attack"] <= playerData["Stats"]["Defence"]:
                 playerData["Stats"]["Health"] -= 1
 
                 print("You did:", playerDamage, "damage to the enemy, but the enemy did 1 damage to you!")
                 print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
-                
+
             else:
-                print("You did:", playerDamage, "damage to the enemy, but the enemy did 1 damage to you!") # enemy hit player
-                print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
+                enemyDamage = enemyProperties["Stats"]["Attack"] - playerData["Stats"]["Defence"] 
+                playerData["Stats"]["Health"] -= enemyDamage
+                
+                print("You did:", playerDamage, "damage to the enemy, but the enemy did", enemyDamage, "damage to you!") # enemy hit player
+                print("Your new health is:", playerData["Stats"]["Health"], ", the enemies health is:", enemyProperties["Stats"]["Health"])
                 
         elif playerAtkChoice == "D":
             print("Player Defended!")
             stun = random.randint(0, 100)
             
-            if stun <= stunChance:
+            if stun >= stunChance:
+                enemyStunned = True
                 print("You dodged the enemy!")
 
             else:
@@ -285,8 +322,11 @@ def combat(enemySelected):
 
             dropRandNum = random.randint(0, 100)
 
+            enemyProperties["Stats"]["Health"] = enemyProperties["DefaultHealth"]
+
             if dropRandNum >= 50: 
                 dropSelected = random.choice(list(enemyProperties["Drops"].keys()))
+                
 
                 print("You aquired: ", dropSelected)
                 gameLoop()
@@ -295,11 +335,24 @@ def combat(enemySelected):
                 print("no drops :(")
                 gameLoop()
                 break
-            
+        
+    print("You died, your quest is over.")
 
-print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.")
-playerName = str(input("Please enter your name: "))
-playerData["PlayerName"] = playerName
-print("Welcome", playerData["PlayerName"])
+    while True:
+        restartQuest = str.upper(input("Restart? Yes(Y): "))  
 
-gameLoop()
+        if restartQuest == "Y":
+            questBegin()
+        
+        else:
+            print("Invalid input")
+
+def questBegin():
+    print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.")
+    playerName = str(input("Please enter your name: "))
+    playerData["PlayerName"] = playerName
+    print("Welcome", playerData["PlayerName"])
+    gameLoop()
+
+# Initialize the game 
+questBegin()
