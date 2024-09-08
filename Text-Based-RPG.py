@@ -1,4 +1,4 @@
-import math, random, time
+import math, random, copy
 
 defaultHealth = 100
 questStep = 0
@@ -11,6 +11,7 @@ levelData = [
     400,
     500
 ]
+
 
 playerData = {
     "Stats":{
@@ -109,15 +110,34 @@ randomEvents = {
 # the player must fight a final boss with the random items they
 # aquired.
 
+defaultPlayerData = copy.deepcopy(playerData)
+defaultEnemysData = copy.deepcopy(enemies)
+
+def cleanupFunction():
+    print("You died, your quest is over.")
+
+    # Resets player's and enemies data
+    playerData = defaultPlayerData
+    enemies = defaultEnemysData
+
+    while True:
+        restartQuest = str.upper(input("Restart? Yes(Y): "))  
+
+        if restartQuest == "Y":
+            questBegin()
+        
+        else:
+            print("Invalid input")
+
 def inventory():
     print("Player opened inventory")
     print(playerData["Inventory"])
-    print(questStep)
     gameLoop()
 
 def equip():
     print("Player opened equip menu")
     print(playerData["EquippedItems"])
+    gameLoop()
 
 def rest():
     print("Player rested")
@@ -149,9 +169,10 @@ def help():
 
 def gameLoop():
     global questStep
+
     if questStep == 0:
         print("This is the first step of your adventure!\nBe sure to prepare for a harsh trek ahead!")
-        print("")
+        print("") # Adds a space
 
         while True:
             playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R), Help(H): "))
@@ -181,6 +202,9 @@ def gameLoop():
                 help()
             else:
                 print("Invalid input")
+
+    elif questStep == 5:
+        print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
 
     elif questStep == 20:
         print("player reached quest step 20, final boss goes here")
@@ -336,16 +360,7 @@ def combat(enemySelected):
                 gameLoop()
                 break
         
-    print("You died, your quest is over.")
-
-    while True:
-        restartQuest = str.upper(input("Restart? Yes(Y): "))  
-
-        if restartQuest == "Y":
-            questBegin()
-        
-        else:
-            print("Invalid input")
+    cleanupFunction()
 
 def questBegin():
     print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.")
