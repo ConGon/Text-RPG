@@ -15,7 +15,7 @@ levelData = [
 
 playerData = {
     "Stats":{
-        "Health": 100,
+        "Health": 10000,
         "Attack": 10,
         "Defence": 0, 
         "Agility": 10,
@@ -39,9 +39,9 @@ playerData = {
     },
 
     "EquippedItems":{
-        "Weapon": ("Fist", "Melee", 1),
+        "Weapon": None,
         "Shield": ("Ragged Leather Sheild", "Shield", 1),
-        "Head": None,
+        "Head": ("Musty Skullcap", "Head",  2),
         "Chest": None,
         "Arms": None,
         "Hands": None,
@@ -143,94 +143,259 @@ def inventory():
     print(playerData["Inventory"])
     gameLoop()
 
+def itemEquipFunction(equipItemInput):
+    capitalEquipItemInput = equipItemInput.capitalize()
+
+    if playerData["Inventory"][capitalEquipItemInput] == None:
+    
+        print("No item in slot", capitalEquipItemInput)
+
+    else:
+
+        inventoryItemSelected = playerData["Inventory"][capitalEquipItemInput] # == ('Old Shortsword', 'Weapon', 10)
+        inventoryItemName = inventoryItemSelected[0]
+        inventoryItemType = inventoryItemSelected[1]
+        inventoryItemStat = inventoryItemSelected[2]
+
+        for equipSlotName, equipSlot, in playerData["EquippedItems"].items():
+            if inventoryItemType == equipSlotName:
+
+                if equipSlot is not None:
+                    print("")
+                    print("That slot isn't empty, unequip the item in it's slot")
+                    equip()
+
+                else:
+                    playerData["EquippedItems"][equipSlotName] = inventoryItemSelected
+                    playerData["Inventory"][capitalEquipItemInput] = None
+                    print("")
+                    print("You equipped:", inventoryItemSelected)
+
+                    if inventoryItemType == "Weapon":
+                        playerData["Stats"]["Attack"] += inventoryItemStat
+                        print("Your attack went up by:", inventoryItemStat)
+                        equipItem()
+
+                    else:
+                        playerData["Stats"]["Defence"] += inventoryItemStat
+                        print("Your defence went up by:", inventoryItemStat)
+                        equipItem()    
+
 def equipItem():
     
-    print("player's inventory", playerData["Inventory"])
-
     while True:
-        equipItemInput = int(input("Which item do you want to equip, input 0 for first slot, etc."))
+        equipItemInput = str.upper(input("Show Equipped Items and Inventory(I), Help(H), Back(B), Equip item(Slot#): "))
         # Player can input 0-10, the number they input equals
         # the item that they want to equip. So prompt the user
         # with the items that are in their inventory, and 
         # what ever item them they select, it automatically gets
         # equipped to it's respective slot.
 
-        if equipItemInput == 0:
-            print("bogos")
+        if equipItemInput == "SLOT0":
+            itemEquipFunction(equipItemInput)
+            print("")
 
-            if playerData["Inventory"]["Slot0"] == None:
-                print("No item in slot 0")
-                gameLoop()
+        elif equipItemInput == "SLOT1":
+            itemEquipFunction(equipItemInput)
+            print("")
 
-            else:
+        elif equipItemInput == "SLOT2":
+            itemEquipFunction(equipItemInput)
+            print("")
 
-                inventoryItemSelected = playerData["Inventory"]["Slot0"] # == ('Old Shortsword', 'Weapon', 10)
-                inventoryItemName = inventoryItemSelected[0]
-                inventoryItemType = inventoryItemSelected[1]
-                inventoryItemStat = inventoryItemSelected[2]
+        elif equipItemInput == "SLOT3":
+            itemEquipFunction(equipItemInput)
+            print("")
 
-                for equipSlotName, equipSlot, in playerData["EquippedItems"].items():
-                    if not equipSlotName == None:
-                        print("That slot isn't empty, unequip the item in it's slot")
-                        equip()
+        elif equipItemInput == "SLOT4":
+            itemEquipFunction(equipItemInput)
+            print("")
 
-                    elif inventoryItemType == equipSlotName:
-                        playerData["EquippedItems"][equipSlotName] = inventoryItemSelected
-                        print("player equipped items", playerData["EquippedItems"])
-                        break
+        elif equipItemInput == "SLOT5":
+            itemEquipFunction(equipItemInput)
+            print("")
 
-        elif equipItemInput == 1:
-            print("bogos")
-
-            inventoryItemSelected = playerData["Inventory"]["Slot1"] # == ('Old Shortsword', 'Weapon', 10)
-            inventoryItemName = inventoryItemSelected[0]
-            inventoryItemType = inventoryItemSelected[1]
-            inventoryItemStat = inventoryItemSelected[2]
-
-            for equipSlotName, equipSlot, in playerData["EquippedItems"].items():
-                if inventoryItemType == equipSlotName:
-                    playerData["EquippedItems"][equipSlotName] = inventoryItemSelected
-                    print("player equipped items", playerData["EquippedItems"])
-                    break
+        elif equipItemInput == "SLOT6":
+            itemEquipFunction(equipItemInput)
+            print("")
         
+        elif equipItemInput == "SLOT7":
+            itemEquipFunction(equipItemInput)
+            print("")
 
+        elif equipItemInput == "SLOT8":
+            itemEquipFunction(equipItemInput)
+            print("")
 
+        elif equipItemInput == "SLOT9":
+            itemEquipFunction(equipItemInput)
+            print("")
+
+        elif equipItemInput == "SLOT10":
+            itemEquipFunction(equipItemInput)
+            print("")
+
+        elif equipItemInput == "I":
+            print("")
+            print("Your equipped items:", playerData["EquippedItems"])
+            print("")    
+            print("Your Inventory: ", playerData["Inventory"]) 
+            print("")
+
+        elif equipItemInput == "H":
+            print("")
+            print("Input the inventory slot of the item you want to equip,")
+            print("For example; If you say 'Slot1', the item in Slot1 will")                        
+            print("be equipped, unless there is an item already equipped in that slot.") 
+
+        elif equipItemInput == "B":
+            print("Player went back")
+            equip()          
 
         else:
             print("Invalid input")
 
-def unequipItem():
-    print("Unequip")
+def unequipItemFunction(unequipItemInput):
+    capitalUnequipItemInput = unequipItemInput.capitalize()
+    fullInventorySlots = 0
 
+    unequipItemMain = playerData["EquippedItems"][capitalUnequipItemInput]
+    unequipItemName = unequipItemMain[0]
+    unequipItemType = unequipItemMain[1]
+    unequipItemStat = unequipItemMain[2]
+
+    for slot, inventoryItem in playerData["Inventory"].items():
+        if inventoryItem == None:
+            playerData["Inventory"][slot] = playerData["EquippedItems"][capitalUnequipItemInput]
+            playerData["EquippedItems"][capitalUnequipItemInput] = None
+            print("")
+            print("You unequipped:", unequipItemName)
+
+            if unequipItemType == "Weapon":
+                playerData["Stats"]["Attack"] -= unequipItemStat
+                print("Your attack went down by:", unequipItemStat)
+                break 
+
+            else:
+                playerData["Stats"]["Defence"] -= unequipItemStat
+                print("Your defence went down by:", unequipItemStat)
+                break
+
+        elif inventoryItem:
+            fullInventorySlots += 1
+
+            if fullInventorySlots == 10:
+                print("Inventory is full")
+                equip()
+
+def unequipItem():
+    print("")
+    print("Your equipped items are:", playerData["EquippedItems"])
+    print("")
+    while True:
+        unequipItemInput = str.upper(input("Help(H), Back(B), Unequip item(ItemType): "))
+
+        if unequipItemInput == "WEAPON":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "SHIELD":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "HEAD":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "CHEST":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "ARMS":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "HANDS":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "LEGS":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "FEET":
+            unequipItemFunction(unequipItemInput)
+
+        elif unequipItemInput == "H":
+            print("")
+            print("Allows you to unequip weapons and armor. To unequip,")
+            print("you must input the name of the equip slot of the item")
+            print("that you wish to unequip, for example: input (Head)")
+            print("To unequip any head armor.")
+
+        elif unequipItemInput == "B":
+            print("player tried to go back")
+            equip()
+
+        else:
+            print("Invalid input")
+            break
+
+       
+                
+           
 
 def discardItem():
     print("What do you want to discard?")
+
+def equipHelp():
+    while True:
+        equipHelpInput = str.upper(input("Help with: Equip(E), Unequip(U), Discard(D), Exit Help(X): "))
+        
+        if equipHelpInput == "E":
+            print("")
+            print("Allows you to equip weapons and armor.")
+
+        elif equipHelpInput == "U":
+            print("")
+            print("Allows you to unequip weapons and armor.")
+
+        elif equipHelpInput == "D":
+            print("")
+            print("Allows you to discard or drop an item.")  
+
+        elif equipHelpInput == "X":
+            print("")
+            equip()
+
+        else:
+            print("")
+            print("Invalid input")
 
 
 def equip():
 
     while True:
-        equipOptionsInput = str.upper(input("Equip options: Equip(E), Unequip (U), Discard(D): "))
+        equipOptionsInput = str.upper(input("Equip options: Equip(E), Unequip(U), Discard(D), Help(H), Back(B): "))
 
         if equipOptionsInput == "E":
-
+            print("")
             equipItem()
 
-
         elif equipOptionsInput == "U":
-            print("Player tried to unequip")
             unequipItem()
         
         elif equipOptionsInput == "D":
-            print("Player tried to discard")
             discardItem()
 
+        elif equipOptionsInput == "B":
+            gameLoop()
+
+        elif equipOptionsInput == "H":
+            print("")
+            equipHelp()
+
         else:
+            print("")
             print("Invalid input")
 
-    gameLoop()
+            
 
 def rest():
+    global questStep
     if playerData["Stats"]["Health"] == 100:
         print("You are already max health")
         gameLoop()
@@ -250,27 +415,36 @@ def rest():
             questStep += 1 
 
 
-def help():
+def mainHelp():
     while True:
-        helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip(E), Rest(R), Exit(X): "))
+        helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip Menu(E), Rest(R), Exit Help(X): "))
 
         if helpMoveInput == "M":
-            print("Moves you forward. % chance for enemy encounter, % chance for random event.\n Also increases the quest step, until step 20, where you fight the final boss.")
-        
+            print("")
+            print("Moves you forward. % chance for enemy encounter, % chance for random event.\nAlso increases the quest step, until step 20, where you fight the final boss.")
+            print("")
+
         elif helpMoveInput == "I":
-            print("Shows all items within your inventory.")
+            print("")
+            print("Shows all items within your inventory. Each item has a name, item type, and stat, in that order.\nExample: Rusty Dagger, Weapon, 5. The stat for weapons is attack, the stat for sheild and armor is defence.  ")
+            print("")
 
         elif helpMoveInput == "E":
+            print("")
             print("Allows you to equip weapons and armor.")
-
+            print("") 
+            
         elif helpMoveInput == "R":
-            print("Allows you to rest for a turn, which heals you 25 health + agility\n Has a chance of enemy ambush")
-        
+            print("")
+            print("Allows you to rest for a turn, which heals you 25 health + agility\nHas a chance of enemy ambush")
+            print("")
         elif helpMoveInput == "X":
             gameLoop()
 
         else:
+            print("")
             print("Invalid input")
+            print("")
 
 def gameLoop():
     global questStep
@@ -279,7 +453,7 @@ def gameLoop():
         print("This is the first step of your adventure!\nBe sure to prepare for a harsh trek ahead!\n")
 
         while True:
-            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R), Help(H): "))
+            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip Menu(E), Rest(R), Help(H): "))
 
             if playerChoice == "M":                
                 moveForward()
@@ -292,17 +466,20 @@ def gameLoop():
 
             elif playerChoice == "E":
                 questStep += 1  
+                print("")
                 equip()
                 break
 
             elif playerChoice == "R":
                 questStep += 1  
+                print("")
                 rest()  
                 break
 
             elif playerChoice == "H":
                 questStep += 1  
-                help()
+                print("")
+                mainHelp()
             else:
                 print("Invalid input")
 
@@ -314,7 +491,7 @@ def gameLoop():
 
     else:
         while True:
-            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R): "))
+            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R), Help(H): "))
             
             if playerChoice == "M": 
                 questStep += 1  
@@ -334,13 +511,13 @@ def gameLoop():
                 break
 
             elif playerChoice == "H":
-                help()
+                mainHelp()
 
             else:
                 print("Invalid input")
         
 def moveForward():
-    global questStep, defaultHealth
+    global questStep, defaultHealth, emptyInventorySlots
     enemyOrEvent = random.randint(0, 100)
     questStep += 1
     
@@ -378,8 +555,14 @@ def combat(enemySelected):
         playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Stats(S), Enemy Stats(E), Help(H): "))
 
         if playerAtkChoice == "A":
-            playerDamage = playerData["Stats"]["Attack"] + playerData["EquippedItems"]["Weapon"][2]
-            enemyProperties["Stats"]["Health"] -= playerDamage # hit enemy 
+            
+            if playerData["EquippedItems"]["Weapon"] == None:
+                playerDamage = playerData["Stats"]["Attack"]
+                enemyProperties["Stats"]["Health"] -= playerDamage # hit enemy 
+
+            else:
+                playerDamage = playerData["Stats"]["Attack"] + playerData["EquippedItems"]["Weapon"][2]
+                enemyProperties["Stats"]["Health"] -= playerDamage # hit enemy 
 
             if enemyStunned:
                 print("The enemy was stunned, they couldn't attack!")
@@ -423,7 +606,7 @@ def combat(enemySelected):
 
         elif playerAtkChoice == "H":
             while True:
-                helpAttackInput = str.upper(input("Help with: Attack(A), Defend(D), Run(R), Stats(S), Exit(X): "))
+                helpAttackInput = str.upper(input("Help with: Attack(A), Defend(D), Run(R), Stats(S), Exit Help(X): "))
                 if helpAttackInput == "A":
                     print("")
                     print("Attacks the enemy, the enemy also attacks you.")
@@ -463,16 +646,6 @@ def combat(enemySelected):
                 dropProperties = enemyProperties["Drops"][dropSelected]
 
                 print("You aquired: ", dropSelected)
-
-                #     "Inventory":{
-                #     "Slot0": None,
-                #     "Slot1": None,
-                #     "Slot2": None,
-                #     "Slot3": None,
-                #     "Slot4": None,
-                #     "Slot5": None,
-                #     "Slot6": None,
-                # },
                 
                 for slot, item in playerData["Inventory"].items():
                     if item is None:  # Check if the slot is empty
@@ -481,6 +654,7 @@ def combat(enemySelected):
                         print(playerData["Inventory"])
                         gameLoop()
                         break
+
 
             else:
                 print("no drops :(")
@@ -491,6 +665,7 @@ def combat(enemySelected):
     cleanupFunction()
 
 def questBegin():
+    print("")
     print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.\n")
     playerName = str(input("Please enter your name: "))
     playerData["PlayerName"] = playerName
