@@ -1,0 +1,32 @@
+-Goblin
+-Orc
+-Troll
+-Skeleton warrior
+-Skeleton ShieldBearer
+-Bandit
+-Wandering Duelist
+-Strange Mercenary
+-Devil Cultist
+-Demon
+-Imp
+-Wolf
+-Bear
+-Wild Boar
+-Giant Rat
+-Slime
+-Mimic
+
+
+-Minibosses
+    -Goblin Lord
+    -Dark Sorcerer
+    -Stone Golem
+    -Dragon
+
+Final boss: Demon Lord
+
+True final boss: Apollyon, Avatar Of Pride
+
+
+
+    

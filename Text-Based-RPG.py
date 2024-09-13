@@ -15,7 +15,7 @@ levelData = [
 
 playerData = {
     "Stats":{
-        "Health": 10000,
+        "Health": 100,
         "Attack": 10,
         "Defence": 0, 
         "Agility": 10,
@@ -38,6 +38,21 @@ playerData = {
         "Slot10": None
     },
 
+    # full inventory for testing
+    #     "Inventory":{
+    #     "Slot0": ("Old Shortsword", "Weapon", 10),
+    #     "Slot1": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot2": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot3": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot4": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot5": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot6": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot7": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot8": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot9": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot10": ("Bruised Iron Leggings", "Legs", 5)
+    # },
+
     "EquippedItems":{
         "Weapon": None,
         "Shield": ("Ragged Leather Sheild", "Shield", 1),
@@ -51,42 +66,301 @@ playerData = {
 }
 
 enemies = {
-    "Goblin": {
+    
+    "Slime": {
+            "Stats":{
+                "Health": 20,
+                "Attack": 2,
+                "Agility": 3,
+                "ExpValue": 10
+            },
+
+            "Drops":{
+                "Forgotten Sword": ("Forgotten Sword", "Weapon", 23),
+                "Slimy Boots": ("Slimy Boots", "Feet", 8),
+                "Slimy Vambraces": ("limy Vambraces", "Arms", 10)
+                
+            },
+
+            "DefaultHealth": 20,
+
+            "DropChance": 35
+        },
+
+    "Wild Boar": {
+            "Stats":{
+                "Health": 40,
+                "Attack": 7,
+                "Agility": 6,
+                "ExpValue": 30
+            },
+
+            "Drops":{
+                "Boar Pelt": ("Boar Pelt", "Legs", 7)
+            },
+
+            "DefaultHealth": 40,
+
+            "DropChance": 45
+        },
+
+    "Wolf": {
+            "Stats":{
+                "Health": 50,
+                "Attack": 10,
+                "Agility": 10,
+                "ExpValue": 65
+            },
+
+            "Drops":{
+                "Wolf Pelt": ("Wolf Pelt", "Chest", 6)
+            },
+
+            "DefaultHealth": 50,
+
+            "DropChance": 40
+        },
+
+    "Giant Rat": {
         "Stats":{
-            "Health": 25,
-            "Attack": 5,
-            "Agility": 25,
-            "ExpValue": 10
+            "Health": 65,
+            "Attack": 12,
+            "Agility": 7,
+            "ExpValue": 100
         },
 
         "Drops":{
-            "Rusty Dagger": ("Rusty Dagger", "Weapon", 5),
-            "Musty Skullcap": ("Musty Skullcap", "Head",  2)
-            
+            "Rat Armor": ("Rat Armor", "Chest", 1),
+            "Stinking Gloves": ("Stinking Gloves", "Hands", 2),
+            "Forgotten Blade": ("Forgotten Blade", "Weapon", 35)
         },
 
-        "DefaultHealth": 25,
+        "DefaultHealth": 65,
 
-        "DropChance": 100
+        "DropChance": 25
     },
 
-    "Skeleton": {
+    "Bandit": {
         "Stats":{
-            "Health": 50,
-            "Attack": 10,
+            "Health": 75,
+            "Attack": 17,
+            "Agility": 15,
+            "ExpValue": 135
+        },
+
+        "Drops":{
+            "Steel Dagger": ("Steel Dagger", "Weapon", 15),
+            "Cloth Bandana": ("Cloth Bandana", "Head", 3),
+            "Leather Boots": ("Leather Boots", "Feet", 3)
+
+        },
+
+        "DefaultHealth": 75,
+
+        "DropChance": 65
+    },
+
+    "Skeleton warrior": {
+        "Stats":{
+            "Health": 100,
+            "Attack": 15,
             "Agility": 5,
-            "ExpValue": 35
+            "ExpValue": 175
         },
 
         "Drops":{
             "Old Shortsword": ("Old Shortsword", "Weapon", 10),
-            "Bruised Iron Leggings": ("Bruised Iron Leggings", "Legs", 5)
+            "Bruised Iron Leggings": ("Bruised Iron Leggings", "Legs", 5),
+            "Battered Iron Helm": ("Battered Iron Helm", "Head", 5),
+            "Rusted Iron Vambraces": ("Rusted Iron Vambraces", "Arms", 5)
+        },
+
+        "DefaultHealth": 100,
+
+        "DropChance": 65
+    },
+
+
+    "Imp": {
+        "Stats":{
+            "Health": 50,
+            "Attack": 20,
+            "Agility": 10,
+            "ExpValue": 300
+        },
+
+        "Drops":{
+            "Blade OF Fire": ("Blade OF Fire", "Weapon", 25)
         },
 
         "DefaultHealth": 50,
 
-        "DropChance": 100
-    }
+        "DropChance": 45
+    },
+
+    "Bear": {
+        "Stats":{
+            "Health": 135,
+            "Attack": 13,
+            "Agility": 4,
+            "ExpValue": 345
+        },
+
+        "Drops":{
+            "Bear Pelt": ("Bear Pelt", "Head", 15),
+            "Bear Claw": ("Bear Claw", "Weapon", 15)
+        },
+
+        "DefaultHealth": 135,
+
+        "DropChance": 75
+    },
+
+    "Orc": {
+        "Stats":{
+            "Health": 120,
+            "Attack": 20,
+            "Agility": 3,
+            "ExpValue": 450
+        },
+
+        "Drops":{
+            "Hefty Cleaver": ("Hefty Cleaver", "Weapon", 15),
+            "Crude Breastplate": ("Crude Breastplate", "Chest", 10),
+            "Crude Mail Vambraces": ("Crude Mail Vambraces", "Arms", 10),
+            "Crude Mail Gauntlets": ("Crude Mail Gauntlets", "Hands", 10),
+            "Crude Mail Leggings": ("Crude Mail Leggings", "Legs", 10),
+            "Crude Mail Boots": ("Crude Mail Boots", "Feet", 10)        
+        },
+
+        "DefaultHealth": 100,
+
+        "DropChance": 65
+    },
+
+    "Devil Cultist": {
+        "Stats":{
+            "Health": 95,
+            "Attack": 28,
+            "Agility": 15,
+            "ExpValue": 510
+        },
+
+        "Drops":{
+            "Cultist Dagger": ("Cultist Dagger", "Weapon", 10),
+            "Cultist Robe": ("Cultist Robe", "Chest", 16),
+            "Ceremonial Hood": ("Ceremonial Hood", "Head", 10),
+            "Strange Gloves": ("Strange Gloves", "Hands", 7),
+            "Enchanted Boots": ("Enchanted Boots", "Feet", 25)
+        },
+
+        "DefaultHealth": 95,
+
+        "DropChance": 65
+    },
+
+    "Wandering Duelist": {
+        "Stats":{
+            "Health": 110,
+            "Attack": 20,
+            "Agility": 20,
+            "ExpValue": 550
+        },
+
+        "Drops":{
+            "Duelist Rapier": ("Duelist Rapier", "Weapon", 18),
+            "Cloth Gambeson": ("Cloth Gambeson", "Chest", 5),
+            "Posh Hat": ("Posh Hat", "Head", 3)
+        },
+
+        "DefaultHealth": 110,
+
+        "DropChance": 75
+    },
+
+    "Strange Mercenary": {
+        "Stats":{
+            "Health": 150,
+            "Attack": 15,
+            "Agility": 10,
+            "ExpValue": 625
+        },
+
+        "Drops":{
+            "Straight Sword": ("Straight Sword", "Weapon", 17),
+            "Steel Buckler": ("Steel Buckler", "Shield", 10),
+            "Mail Helm": ("Mail Helm", "Head", 8),
+            "Mail Shirt": ("Mail Shirt", "Chest", 15),
+            "Mail Vambraces": ("Mail Vambraces", "Arms", 8),
+            "Mail Mittens": ("Mail Mittens", "Hands", 6),
+            "Mail Chausses": ("Mail Chausses", "Legs", 13)
+        },
+
+        "DefaultHealth": 150,
+
+        "DropChance": 85
+    }, 
+
+    "Troll": {
+        "Stats":{
+            "Health": 300,
+            "Attack": 10,
+            "Agility": 1,
+            "ExpValue": 1300
+        },
+
+        "Drops":{
+            "Giant Blade": ("Giant Blade", "Weapon", 25),
+            "Horned Helm": ("Horned Helm", "Head", 20)
+        },
+
+        "DefaultHealth": 300,
+
+        "DropChance": 65
+    },
+
+    "Mimic": {
+        "Stats":{
+            "Health": 65,
+            "Attack": 40,
+            "Agility": 4,
+            "ExpValue": 2321
+        },
+
+        "Drops":{
+            "Ruby Blade": ("Ruby Blade", "Weapon", 20),
+            "Gemstone Greatsword": ("Gemstone Greatsword", "Weapon", 30),
+            "Relic Sword": ("Relic Sword", "Weapon", 60),
+            "Golden Shield": ("Golden Shield", "Shield", 25),
+            "Platinum Crown": ("Platinum Crown", "Head", 15)
+        },
+
+        "DefaultHealth": 65,
+
+        "DropChance": 45
+    },
+
+    "Demon": {
+        "Stats":{
+            "Health": 250,
+            "Attack": 23,
+            "Agility": 7,
+            "ExpValue": 2540
+        },
+
+        "Drops":{
+            "Runed Longsword": ("Runed Longsword", "Weapon", 30),
+            "Runed Shield":  ("Runed Shield", "Shield", 30),
+            "Hell Helm,": ("Hell Helm", "Head", 30),
+            "Hell Gauntlets": ("Hell Gauntlets", "Hands", 30),
+            "Hell Plate": ("Hell Plate", "Chest", 35)
+        },
+
+        "DefaultHealth": 250,
+
+        "DropChance": 75
+},
+    
 
 }
 
@@ -174,11 +448,13 @@ def itemEquipFunction(equipItemInput):
                     if inventoryItemType == "Weapon":
                         playerData["Stats"]["Attack"] += inventoryItemStat
                         print("Your attack went up by:", inventoryItemStat)
+                        print("")
                         equipItem()
 
                     else:
                         playerData["Stats"]["Defence"] += inventoryItemStat
                         print("Your defence went up by:", inventoryItemStat)
+                        print("")
                         equipItem()    
 
 def equipItem():
@@ -249,7 +525,7 @@ def equipItem():
             print("be equipped, unless there is an item already equipped in that slot.") 
 
         elif equipItemInput == "B":
-            print("Player went back")
+            print("")
             equip()          
 
         else:
@@ -269,22 +545,29 @@ def unequipItemFunction(unequipItemInput):
             playerData["Inventory"][slot] = playerData["EquippedItems"][capitalUnequipItemInput]
             playerData["EquippedItems"][capitalUnequipItemInput] = None
             print("")
+            print("Your equipped items are:", playerData["EquippedItems"])
+            print("")
             print("You unequipped:", unequipItemName)
 
             if unequipItemType == "Weapon":
                 playerData["Stats"]["Attack"] -= unequipItemStat
+                print(playerData["EquippedItems"])
+                print("")
                 print("Your attack went down by:", unequipItemStat)
+                print("")
                 break 
 
             else:
                 playerData["Stats"]["Defence"] -= unequipItemStat
                 print("Your defence went down by:", unequipItemStat)
+                print("")
                 break
 
         elif inventoryItem:
             fullInventorySlots += 1
 
             if fullInventorySlots == 10:
+                print("")
                 print("Inventory is full")
                 equip()
 

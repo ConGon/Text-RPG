@@ -1,0 +1,343 @@
+ENEMY FORMAT:
+
+"Slime": {
+        "Stats":{
+            "Health": 20,
+            "Attack": 2,
+            "Agility": 3,
+            "ExpValue": 10
+        },
+
+        "Drops":{
+            "Forgotten Sword": ("Forgotten Sword", "Weapon", 23),
+            "Slimy Boots": ("Slimy Boots", "Feet", 8),
+            "Slimy Vambraces": ("limy Vambraces", "Arms", 10)
+            
+        },
+
+        "DefaultHealth": 20,
+
+        "DropChance": 35
+    },
+
+"Wild Boar": {
+        "Stats":{
+            "Health": 40,
+            "Attack": 7,
+            "Agility": 6,
+            "ExpValue": 30
+        },
+
+        "Drops":{
+            "Boar Pelt": ("Boar Pelt", "Legs", 7)
+        },
+
+        "DefaultHealth": 40,
+
+        "DropChance": 45
+    },
+
+"Wolf": {
+        "Stats":{
+            "Health": 50,
+            "Attack": 10,
+            "Agility": 10,
+            "ExpValue": 65
+        },
+
+        "Drops":{
+            "Wolf Pelt": ("Wolf Pelt", "Chest", 6)
+        },
+
+        "DefaultHealth": 50,
+
+        "DropChance": 40
+    },
+
+"Giant Rat": {
+    "Stats":{
+        "Health": 65,
+        "Attack": 12,
+        "Agility": 7,
+        "ExpValue": 100
+    },
+
+    "Drops":{
+        "Rat Armor": ("Rat Armor", "Chest", 1),
+        "Stinking Gloves": ("Stinking Gloves", "Hands", 2),
+        "Forgotten Blade": ("Forgotten Blade", "Weapon", 35)
+    },
+
+    "DefaultHealth": 65,
+
+    "DropChance": 25
+},
+
+"Bandit": {
+    "Stats":{
+        "Health": 75,
+        "Attack": 17,
+        "Agility": 15,
+        "ExpValue": 135
+    },
+
+    "Drops":{
+        "Steel Dagger": ("Steel Dagger", "Weapon", 15),
+        "Cloth Bandana": ("Cloth Bandana", "Head", 3),
+        "Leather Boots": ("Leather Boots", "Feet", 3)
+
+    },
+
+    "DefaultHealth": 75,
+
+    "DropChance": 65
+},
+
+"Skeleton warrior": {
+    "Stats":{
+        "Health": 100,
+        "Attack": 15,
+        "Agility": 5,
+        "ExpValue": 175
+    },
+
+    "Drops":{
+        "Old Shortsword": ("Old Shortsword", "Weapon", 10),
+        "Bruised Iron Leggings": ("Bruised Iron Leggings", "Legs", 5),
+        "Battered Iron Helm": ("Battered Iron Helm", "Head", 5),
+        "Rusted Iron Vambraces": ("Rusted Iron Vambraces", "Arms", 5)
+    },
+
+    "DefaultHealth": 100,
+
+    "DropChance": 65
+},
+
+"Skeleton ShieldBearer": {
+    "Stats":{
+        "Health": 150,
+        "Attack": 5,
+        "Agility": 1,
+        "ExpValue": 250
+    },
+
+    "Drops":{
+        "Old Iron Shield": ("Old Iron Shield", "Shield", 10)
+        "Rusty Steel Boot": ("Rusty Steel Boot", "Feet", 15)
+    },
+
+    "DefaultHealth": 150,
+
+    "DropChance": 45
+},
+
+"Imp": {
+    "Stats":{
+        "Health": 50,
+        "Attack": 20,
+        "Agility": 10,
+        "ExpValue": 300
+    },
+
+    "Drops":{
+        "Blade OF Fire": ("Blade OF Fire", "Weapon", 25)
+    },
+
+    "DefaultHealth": 50,
+
+    "DropChance": 45
+},
+
+"Bear": {
+    "Stats":{
+        "Health": 135,
+        "Attack": 13,
+        "Agility": 4,
+        "ExpValue": 345
+    },
+
+    "Drops":{
+        "Bear Pelt": ("Bear Pelt", "Head", 15),
+        "Bear Claw": ("Bear Claw", "Weapon", 15)
+    },
+
+    "DefaultHealth": 135,
+
+    "DropChance": 75
+},
+
+"Orc": {
+    "Stats":{
+        "Health": 120,
+        "Attack": 20,
+        "Agility": 3,
+        "ExpValue": 450
+    },
+
+    "Drops":{
+        "Hefty Cleaver": ("Hefty Cleaver", "Weapon", 15),
+        "Crude Breastplate": ("Crude Breastplate", "Chest", 10),
+        "Crude Mail Vambraces": ("Crude Mail Vambraces", "Arms", 10),
+        "Crude Mail Gauntlets": ("Crude Mail Gauntlets", "Hands", 10),
+        "Crude Mail Leggings": ("Crude Mail Leggings", "Legs", 10),
+        "Crude Mail Boots": ("Crude Mail Boots", "Feet", 10)        
+    },
+
+    "DefaultHealth": 100,
+
+    "DropChance": 65
+},
+
+"Devil Cultist": {
+    "Stats":{
+        "Health": 95,
+        "Attack": 28,
+        "Agility": 15,
+        "ExpValue": 510
+    },
+
+    "Drops":{
+        "Cultist Dagger": ("Cultist Dagger", "Weapon", 10),
+        "Cultist Robe": ("Cultist Robe", "Chest", 16),
+        "Ceremonial Hood": ("Ceremonial Hood", "Head", 10),
+        "Strange Gloves": ("Strange Gloves", "Hands", 7),
+        "Enchanted Boots": ("Enchanted Boots", "Feet", 25)
+    },
+
+    "DefaultHealth": 95,
+
+    "DropChance": 65
+},
+
+"Wandering Duelist": {
+    "Stats":{
+        "Health": 110,
+        "Attack": 20,
+        "Agility": 20,
+        "ExpValue": 550
+    },
+
+    "Drops":{
+        "Duelist Rapier": ("Duelist Rapier", "Weapon", 18),
+        "Cloth Gambeson": ("Cloth Gambeson", "Chest", 5),
+        "Posh Hat": ("Posh Hat", "Head", 3)
+    },
+
+    "DefaultHealth": 110,
+
+    "DropChance": 75
+},
+
+"Strange Mercenary": {
+    "Stats":{
+        "Health": 150,
+        "Attack": 15,
+        "Agility": 10,
+        "ExpValue": 625
+    },
+
+    "Drops":{
+        "Straight Sword": ("Straight Sword", "Weapon", 17),
+        "Steel Buckler": ("Steel Buckler", "Shield", 10),
+        "Mail Helm": ("Mail Helm", "Head", 8),
+        "Mail Shirt": ("Mail Shirt", "Chest", 15),
+        "Mail Vambraces": ("Mail Vambraces", "Arms", 8),
+        "Mail Mittens": ("Mail Mittens", "Hands", 6),
+        "Mail Chausses": ("Mail Chausses", "Legs", 13)
+    },
+
+    "DefaultHealth": 150,
+
+    "DropChance": 85
+}, 
+
+"Troll": {
+    "Stats":{
+        "Health": 300,
+        "Attack": 10,
+        "Agility": 1,
+        "ExpValue": 1300
+    },
+
+    "Drops":{
+        "Giant Blade": ("Giant Blade", "Weapon", 25),
+        "Horned Helm": ("Horned Helm", "Head", 20)
+    },
+
+    "DefaultHealth": 300,
+
+    "DropChance": 65
+},
+
+"Mimic": {
+    "Stats":{
+        "Health": 65,
+        "Attack": 40,
+        "Agility": 4,
+        "ExpValue": 2321
+    },
+
+    "Drops":{
+        "Ruby Blade": ("Ruby Blade", "Weapon", 20),
+        "Gemstone Greatsword": ("Gemstone Greatsword", "Weapon", 30),
+        "Relic Sword": ("Relic Sword", "Weapon", 60),
+        "Golden Shield": ("Golden Shield", "Shield", 25),
+        "Platinum Crown": ("Platinum Crown", "Head", 15)
+    },
+
+    "DefaultHealth": 65,
+
+    "DropChance": 45
+},
+
+"Demon": {
+    "Stats":{
+        "Health": 250,
+        "Attack": 23,
+        "Agility": 7,
+        "ExpValue": 2540
+    },
+
+    "Drops":{
+        "Runed Longsword": ("Runed Longsword", "Weapon", 30),
+        "Runed Shield":  ("Runed Shield", "Shield", 30),
+        "Hell Helm,": ("Hell Helm", "Head", 30),
+        "Hell Gauntlets": ("Hell Gauntlets", "Hands", 30),
+        "Hell Plate": ("Hell Plate", "Chest", 35)
+    },
+
+    "DefaultHealth": 250,
+
+    "DropChance": 75
+},
+
+-Minibosses
+    -Goblin Lord
+        "Sword Of The Goblin": ("Sword Of The Goblin", "Weapon", 25),
+        "Darksteel Warhammer": ("Darksteel Warhammer", "Weapon", 30)
+
+    -Dark Sorcerer
+        "Staff Of Onyx": ("Staff Of Onyx", "Weapon", 35),
+        "Blade Of Night": ("Blade Of Night", "Weapon", 40)
+
+    -Stone Golem
+        "Windcrest Scimitar": ("Windcrest Scimitar", "Weapon", 45),
+        "Hero's Sword": ("Hero's Sword", "Weapon", 40),
+        "Dragonslayer": ("Dragonslayer", "Weapon", 50)
+        
+    -Dragon
+        "Azi-Dahakha": ("Azi-Dahakha", "Weapon", 75),
+        "Drained Blade": ("Drained Blade", "Weapon", 0),
+        "Great Aegis": ("Great Aegis", "Shield", 50),
+        "Blessed Helm": ("Blessed Helm", "Head", 65)
+
+#if 0 damage then kill instantly?? maybe the drained blade one shots
+Final boss: Demon Lord
+    "Mammon, Spear Of The Underworld": ("Mammon, Spear Of The Underworld", "Weapon", 120)
+    "Leviathan, Greatsword Of Brimstone": ("Leviathan, Greatsword Of Brimstone", "Weapon", 150)
+    "Weeping Edge": ("Weeping Edge", "Weapon", 135)
+    "Doomseer": ("Doomseer", "Head", 130)
+    "Seal of Murmur": ("Seal of Murmur", "Chest", 150)
+
+True final boss: Apollyon, Avatar Of Pride
+    "Phoenix": ("Phoenix", "Weapon", 1000)
