@@ -4,6 +4,12 @@ defaultHealth = 100
 questStep = 0
 enemyStunned = False
 
+#IDEA FOR SHOP
+#Create a table for all the items, and their price
+#When you want to sell an item, loop through the items
+#in the player's table and check which items they have.
+#Then, display the prices of the items they posess.
+
 levelData = [
     100,
     200,
@@ -13,29 +19,40 @@ levelData = [
 ]
 
 
+# MARK: PLAYER DATA
 playerData = {
     "Stats":{
         "Health": 100,
         "Attack": 10,
         "Defence": 0, 
-        "Agility": 10,
+        "Agility": 25,
         "Level": 0,
         "Exp": 0,
         "Gold": 0
     },
 
     "Inventory":{
-        "Slot0": ("Old Shortsword", "Weapon", 10),
-        "Slot1": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot2": None,
+        "SLOT0": ("Old Shortsword", "Weapon", 10),
+        "SLOT1": ("Bruised Iron Leggings", "Legs", 5),
+        "SLOT2": None,
         "Slot3": None,
-        "Slot4": None,
-        "Slot5": None,
+        "SLOT4": None,
+        "SLOT5": None,
         "Slot6": None,
         "Slot7": None,
         "Slot8": None,
         "Slot9": None,
-        "Slot10": None
+        "Slot10": None,
+        "Slot11": None,
+        "Slot12": None,
+        "Slot13": None,
+        "Slot14": None,
+        "Slot15": None,
+        "Slot16": None,
+        "Slot17": None,
+        "Slot18": None,
+        "Slot19": None,
+        "Slot20": None,
     },
 
     # full inventory for testing
@@ -50,7 +67,7 @@ playerData = {
     #     "Slot7": ("Bruised Iron Leggings", "Legs", 5),
     #     "Slot8": ("Bruised Iron Leggings", "Legs", 5),
     #     "Slot9": ("Bruised Iron Leggings", "Legs", 5),
-    #     "Slot10": ("Bruised Iron Leggings", "Legs", 5)
+    #     "Slot10": ("Bruised Iron Leggings", "Legs", 5)e
     # },
 
     "EquippedItems":{
@@ -361,25 +378,653 @@ enemies = {
         "DropChance": 75
 },
     
-
 }
 
-# EXP, GOLD, ATTACK
+#MARK: RANDOM EVENTS
 randomEvents = {
-    "Treasure Chest":{
+ 
+"AncientStatue":{
+    "Stats":{
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        "Gold": 0,
+        "Exp": 55
+        },
+
+    "Drops": None,
+    "HealthRestore": True,
+
+    "EventDescription": 
+
+"""You stumble upon an ancient statue, and 
+you notice various ancient symbols. The statue begins to glow, and
+you feel as though you were healed of all injury. You continue your quest."""
+},
+ 
+"TreasureChest":{
+    "Stats":{
+        "Exp": 60,
+        "Gold": 545,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You find A chest full of gold and plunder! It was laying in plain sight,
+pretty strange that someone would leave it unattended. You loot it's treasure regardless."""
+},
+
+"RottenCorpse":{
+    "Stats":{
+        "Exp": 20,
+        "Gold": 150,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You spot a filthy, rotting corpse along the path,
+you take what you can find from it, as they won't
+be needing it anymore..."""
+},
+
+"GoldenMask":{
+    "Stats":{
+        "Exp": 500,
+        "Gold": 250,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""A glint of light blinds you for a moment,
+you glance in the direction the light came from.
+You walk towards it and it leads you to a innocuous tree,
+but upon closer inspection, on it's trunk you see what looks
+like an opening, big enough for a hand to fit. You reach inside
+and feel a metal object, soon you realise what you reached inside of
+is an ancient compartment built into the tree. You rip the front
+off of the compartment and within is a Golden Mask! You take it and 
+continue on your journey."""
+},
+
+"RuinedCaravan":{
+    "Stats":{
+        "Exp": 100,
+        "Gold": 250,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You are travelling along the road, and notice a paticularly dense
+patch of forest. You cautiously move forward, not long before
+noticing the remains of what was once a caravan. You scan 
+the area for bandits or other malevolant creatures, and determine
+that there is nothing lingering or waiting in ambush. You find various
+things that unwise brigands left behind."""
+},
+     
+"BattlefieldRemains":{
+    "Stats":{
+        "Exp": 100,
+        "Gold": 50,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""A disgusting smell enters your nostrils, death.
+you cautiously walk forward, and trough a clearing in
+the forest, you spot what looks like the remains of a small
+skirmish. You look for movement, but all that remain are dead men.
+You scour the battlefeild, and you find a decent set of Soldiers Armor!"""
+},
+    
+"CharredRemains":{
+    "Stats":{
+        "Exp": 10,
+        "Gold": 5,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You spot a small plume of smoke close by, so you take some time to investigate.
+Eventually you spot it, the charred remains of what was once human. You pilfer
+whatever was left of the remains, and return to the road ahead"""
+},
+    
+"FriendlyTraveller":{
+    "Stats":{
+        "Exp": 100,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You come across an old man walking along the same path as you.
+You greet him and he shares his various stories from his youth.
+He gives you advise of the road ahead."""
+},
+     
+"CultistSigil":{
+    "Stats":{
+        "Exp": 750,
+        "Gold": 0,
+        "Attack": 5,
+        "Defence": 1,
+        "Agility": 1,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""In the distance you spot a red glow. You wearily approach it,
+and notice it's coming from inside of a shallow cave. You cautiously
+move inside and see a red glowing symbol on the ground. The mark of
+silence, an evil and malevolant symbol. The symbol flashes red, then
+dissapears, but you feel as though you have become stronger."""
+},
+       
+"StrangeGlowing":{
+    "Stats":{
+        "Exp": 250,
+        "Gold": 1000,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None, # could have a red gemstone item that does 1 damage but sells for 1000.
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""After a long day of travelling, you set up camp along a secluded cove.
+A beautiful river runs through the middle of a clearing, it is the perfect
+place for rest. You soon fall asleep in your makeshift shelter. Suddenly, you
+awake, A bad dream. It is still pitch black, and you try to go back to sleep but
+not too far in the distance, a strange glow catches your eye. You quickly arm yourself
+and investigate. You slowly and silently inch closer to the glowing, now meters away from it.
+You can see it, a bright red gemstone, a thing sure to be valuable. You let out a sigh of relief
+and go back to your camp, where you sleep the night away."""
+},
+        
+"CrazedMan":{
+    "Stats":{
         "Exp": 0,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You notice a man sitting in the road, talking to himself.
+As you approach, his ramblings become more clear, it is a man
+who lost his mind. He speaks of a sybol, or seal as he called it,
+and a calamity that would soon take place. He told you to beware 
+of the Phoenix. You distance yourself from the man and continue your travels."""
+},
+    
+"EvilPresence":{
+    "Stats":{
+        "Exp": 0,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 1,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""All your hairs stand on end, and your heart stops for a moment. 
+Fear is all you feel, and you cannot move. You sense a great evil
+nearby, one that terrifies you. But soon enough, the feeling vanishes,
+and you wearily contiune walking along the road."""
+},
+
+"SwordInStone":{
+    "Stats":{
+        "Exp": 1000,
+        "Gold": 0,
+        "Attack": 2,
+        "Defence": 2,
+        "Agility": 2,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""A ray of light shines upon a large boulder. You make your way towards
+it. You walk closer then you notice it, a beautiful sword, lodged into the rock.
+You take both hands and grab the handle of the sword, and pull as hard as you can.
+The sword doesn't budge, but eventually, it gets looser, and soon, with one final
+pull, out it popped! You inspect it, and it is a fine blade indeed. Engraved in
+symbols you have never seen, this could've been the sword of a hero!"""
+},
+
+"RuinedCastle":{
+    "Stats":{
+        "Exp": 125,
         "Gold": 25,
         "Attack": 0,
-        "HealthRestore": False,
-        "EventDescription": "You find A chest full of gold and plunder!"
-    },
-    "Ancient Statue": {
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""As you are travelling along the road, you come across ruined castle.
+You search it's halls and dungeons, and take what you can find. Eventually,
+you happen upon the armory, and find various old weapons and armor."""
+},
+ 
+"GodlyRays":{
+    "Stats":{
+        "Exp": 3500,
+        "Gold": 0,
+        "Attack": 20,
+        "Defence": 20,
+        "Agility": 20,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""From the sky shine beautiful rays of gold. You look up and see it,
+a rare phenomenon of the land: 'Godly Rays'. A thing spoke of in famous
+tales, that rays of gold will shine upon who that will vanquish all evil
+and save the world. Power surges through your veins, you feel like you can
+do anything. Are the stories true?"""
+},
+
+"RejuvinatingPool":{
+    "Stats":{
+        "Exp": 300,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": True,
+
+    "EventDescription": 
+    
+"""Along the road, you see a clearing. You make your way towards it.
+As you walk closer you can see a lake, but moving closer to it,
+you notice a small pond of water, water that almost looks like it
+is glowing. You set aside your equipment and bathe in the waters.
+You feel as though your wounds have completely healed."""
+},
+
+"BeautifulWaterfall":{
+    "Stats":{
+        "Exp": 300,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""The things you have seen and the creatures and men you have killed
+begin to weigh on your mind, but you keep walking along the road.
+Eventually you spot a river, and follow it upstream. Soon, you come 
+across a beautiful waterfall, and try to meditate to relieve your soul.
+Eventually you pick up and begin heading forward, to continue your journey."""
+},
+    
+"AdventurersBackpack":{
+    "Stats":{
+        "Exp": 0,
+        "Gold": 55,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""Along the path, you notice a backpack. You open itis look at whats inside.
+From it's contents you surmise that this is the backpack of an adventurer, 
+likely close by. Nonetheless, you take what you wanted and contiune your trek..."""
+},
+
+"PotionTester":{
+    "Stats":{
+        "Exp": 650,
+        "Gold": 0,
+        "Attack": 10,
+        "Defence": 5,
+        "Agility": 15,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You can see strange looking man walking towards you.
+He has many potions strapped to his belt and pack,
+and alchemical tools line the inside of his coat.
+He asks if you can try one of his potions, as he claims
+he is a famous alchemist from the empire. You indulge him,
+and feel as though the potion not only healed you, but made you
+stronger and faster! You tell him and he is suprised to hear it.
+Nonetheless, you and him part ways, but the warnings he gave you
+of the road ahead make you a little more cautious."""
+},
+
+"SuspiciousBoulder":{
+    "Stats":{
+        "Exp": 200,
+        "Gold": 500,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""Ahead of you, you notice a oddly shaped bouler, Almost unnatural. 
+You move to investigate it, and Upon further inspection, the boudler 
+doesn't look like a boulder at all! You tap it with the tip of your blade,
+and low and behold, a small creature crawls out from under it. He repremands
+you for disturbing his sleep, and throws a bag of gold on the ground and crawls
+back into what now you believe to be his home. You take the gold and continue on your journey."""
+},
+
+"PathSplit":{
+    "Stats":{
+        "Exp": 0,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""The path splits into 2, so you decide to take the left path.
+You hope you made the right desicion..."""
+},
+  
+"OldHelmet":{
+    "Stats":{
+        "Exp": 50,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You are about to cross a bridge when you notice a slight glint
+from under it. You walk under the bridge and examine the source of the glint.
+A horned helm! It's not the greatest helmet but at least it's not a troll..."""
+
+},
+
+"AncientArtifact":{
+    "Stats":{
+        "Exp": 15000,
+        "Gold": 0,
+        "Attack": 100,
+        "Defence": 50,
+        "Agility": 50,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You happen upon what appears to be a library of some sort,
+disguised as a small hill. But it has long since decayed and
+crumbled under its own weight, making the disguise ineffective.
+You search for any surviving tomes and scrolls, but fail to find anything
+of note. Just as you're about to leave the ruins, you notice on a decayed
+shelf: An ancient artifact, a thing of pure beauty. It is a levitating onyx jewel
+inside of a crystal ball. It is small enough to fit in your pocket, but the
+more you ponder it, the larger it seems to become. In a flash of light, 
+you feel it: Power surging throughout your entire body! You have become 
+the vessel of something ancient, something powerful."""
+},
+
+"Skeleton":{
+    "Stats":{
+        "Exp": 30,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You notice bones scattered across the ground. Upon farthur
+inspection, you realise these are human remains, ancient and
+decayed. But, on the ground you see an old sword and shield!
+Finders keepers!"""
+},
+
+"LoudScreech":{
+    "Stats":{
+        "Exp": 0,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 1,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""A loud screech fills your ears, a foul sound that puts you on edge.
+You hide and anticipate an attack, but only silence rings throughout
+the vast forest. You make haste to continue along the path."""
+},
+
+"Village":{
+    "Stats":{
+        "Exp": 550,
+        "Gold": 1,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""Along your travels, you spot a village in the distance. 
+Mules and horses pulling wagons of hay, cabbages and produce from their farms,
+men and women walking about, and the fresh smell of bread and soup, things that are
+a very welcome sight. You say hello to the locals, and they offer you various gifts.
+Soon, you continue on your journey."""
+},
+
+"StormyWeather":{
+    "Stats":{
         "Exp": 100,
-        "Gold": 10,
-        "Attack": 1,
-        "HealthRestore": True,
-        "EventDescription": "You stumble upon an ancient, glowing statue..."
-    }
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""As you walk, it begins to rain, and from rain, thunder. You seek shelter
+under a nearby cliff, the overhang giving you decent coverage from the rain.
+After many hours, you continue your journey."""
+},
+  
+"AncientArmor":{
+    "Stats":{
+        "Exp": 200,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You tire from many days travel, and so you seek out shelter to rest.
+You spot a shaded meadow, with trees surrounding it. You lay against a tree and
+look through your baggage. Many hours pass and you pick yourself up and continue,
+but as you get up, you notice ancient an ancient set of armor, lying in the grass
+beside you. Suprised that you didn't see it before, you inspect it. Though it is old,
+it is full plate, and will provide great protection from the dangers to come."""
+},
+
+"BandOfAdventurers":{
+    "Stats":{
+        "Exp": 550,
+        "Gold": 0,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""A man taps you on your shoulder, a dwarf assasin from the far reaches of the world.
+With a relieved look on his face, he asks you to join his group around their bonfire and lodgings.
+They share with you their stories of adventure and pass around rum, forest forage and nuts.
+After a long Friendly conversation with the five adventurers, you return to your journey."""
+},
+
+"SmallCave":{
+    "Stats":{
+        "Exp": 250,
+        "Gold": 5000,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You stumble upon a small cave, within it: A golden chest!
+ancient trinkets and baubles fill your vision, You're rich!
+You fill your pack with as much gold and trinkets that your pack
+can carry."""
+},
+
+"GoblinHorde":{
+    "Stats":{
+        "Exp": 250,
+        "Gold": 500,
+        "Attack": 0,
+        "Defence": 0,
+        "Agility": 0,
+        },
+
+    "Drops": None,
+    "HealthRestore": False,
+
+    "EventDescription": 
+    
+"""You notice a goblin horde walking along a path, you hide, 
+and when they are long out of your sight, you notice a gemstone one of them dropped.
+You quickly snatch it and continue on your way."""
+}
+
 }
 
 # This is for randomizing drops and encounters.
@@ -396,6 +1041,7 @@ defaultPlayerData = copy.deepcopy(playerData)
 defaultEnemysData = copy.deepcopy(enemies)
 
 ## Resets everything when player dies
+# MARK: CLEANUP FUNCTION
 def cleanupFunction():
     global playerData, enemies
     print("You died, your quest is over.")
@@ -413,9 +1059,11 @@ def cleanupFunction():
         else:
             print("Invalid input")
 
+# MARK: INVENTORY
 def inventory():
     print(playerData["Inventory"])
     gameLoop()
+
 
 def itemEquipFunction(equipItemInput):
     capitalEquipItemInput = equipItemInput.capitalize()
@@ -457,8 +1105,8 @@ def itemEquipFunction(equipItemInput):
                         print("")
                         equipItem()    
 
+# MARK: EQUIP ITEM
 def equipItem():
-    
     while True:
         equipItemInput = str.upper(input("Show Equipped Items and Inventory(I), Help(H), Back(B), Equip item(Slot#): "))
         # Player can input 0-10, the number they input equals
@@ -467,49 +1115,10 @@ def equipItem():
         # what ever item them they select, it automatically gets
         # equipped to it's respective slot.
 
-        if equipItemInput == "SLOT0":
+        if equipItemInput in [f"SLOT{i}" for i in range(21)]:
             itemEquipFunction(equipItemInput)
             print("")
 
-        elif equipItemInput == "SLOT1":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT2":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT3":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT4":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT5":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT6":
-            itemEquipFunction(equipItemInput)
-            print("")
-        
-        elif equipItemInput == "SLOT7":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT8":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT9":
-            itemEquipFunction(equipItemInput)
-            print("")
-
-        elif equipItemInput == "SLOT10":
-            itemEquipFunction(equipItemInput)
-            print("")
 
         elif equipItemInput == "I":
             print("")
@@ -571,6 +1180,7 @@ def unequipItemFunction(unequipItemInput):
                 print("Inventory is full")
                 equip()
 
+# MARK: UNEQUIP ITEM
 def unequipItem():
     print("")
     print("Your equipped items are:", playerData["EquippedItems"])
@@ -620,7 +1230,7 @@ def unequipItem():
        
                 
            
-
+# MARK: DISCARD ITEM & HELP
 def discardItem():
     print("What do you want to discard?")
 
@@ -648,9 +1258,8 @@ def equipHelp():
             print("")
             print("Invalid input")
 
-
+# MARK: EQUIP MAIN
 def equip():
-
     while True:
         equipOptionsInput = str.upper(input("Equip options: Equip(E), Unequip(U), Discard(D), Help(H), Back(B): "))
 
@@ -676,7 +1285,7 @@ def equip():
             print("Invalid input")
 
             
-
+# MARK: REST
 def rest():
     global questStep
     if playerData["Stats"]["Health"] == 100:
@@ -697,7 +1306,7 @@ def rest():
             moveForward()
             questStep += 1 
 
-
+# MARK: MAIN HELP
 def mainHelp():
     while True:
         helpMoveInput = str.upper(input("Help with: Move forward(M), Inventory(I), Equip Menu(E), Rest(R), Exit Help(X): "))
@@ -729,6 +1338,12 @@ def mainHelp():
             print("Invalid input")
             print("")
 
+
+def stats():
+    print(playerData["Stats"])
+    gameLoop()
+
+#MARK: MAIN GAME LOOP!!!
 def gameLoop():
     global questStep
 
@@ -736,9 +1351,16 @@ def gameLoop():
         print("This is the first step of your adventure!\nBe sure to prepare for a harsh trek ahead!\n")
 
         while True:
-            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip Menu(E), Rest(R), Help(H): "))
+            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip Menu(E), Rest(R), Stats(S) Help(H): "))
 
-            if playerChoice == "M":                
+            if questStep == 5:
+                print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+                moveForward()
+
+            elif questStep == 20:
+                print("player reached quest step 20, final boss goes here")
+            
+            elif playerChoice == "M":                
                 moveForward()
                 break
 
@@ -759,6 +1381,10 @@ def gameLoop():
                 rest()  
                 break
 
+            elif playerChoice == "S":
+                questStep += 1
+                stats()
+
             elif playerChoice == "H":
                 questStep += 1  
                 print("")
@@ -766,15 +1392,9 @@ def gameLoop():
             else:
                 print("Invalid input")
 
-    elif questStep == 5:
-        print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
-        moveForward()
-    elif questStep == 20:
-        print("player reached quest step 20, final boss goes here")
-
     else:
         while True:
-            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R), Help(H): "))
+            playerChoice = str.upper(input("Move forward(M), Inventory(I), Equip(E), Rest(R), Stats(S) Help(H): "))
             
             if playerChoice == "M": 
                 questStep += 1  
@@ -793,31 +1413,44 @@ def gameLoop():
                 rest()  
                 break
 
+            elif playerChoice == "S":
+                stats()
+                break
+
             elif playerChoice == "H":
                 mainHelp()
 
             else:
                 print("Invalid input")
-        
+
+#MARK: MOVE FORWARD
 def moveForward():
     global questStep, defaultHealth, emptyInventorySlots
     enemyOrEvent = random.randint(0, 100)
     questStep += 1
     
-    if enemyOrEvent >= 90: #Encountered Random Event:
+    if enemyOrEvent <= 90: #Encountered Random Event:
 
         eventSelected = random.choice(list(randomEvents.keys()))
         eventProperties = randomEvents[eventSelected]
-
+        print("")
         print(eventProperties["EventDescription"])
-        playerData["Stats"]["Exp"] += eventProperties["Exp"]
-        playerData["Stats"]["Gold"] += eventProperties["Gold"]
-        playerData["Stats"]["Attack"] += eventProperties["Attack"]
+        print("")
+        for stat, statAmount in eventProperties["Stats"].items():
+
+            if statAmount:
+                playerData["Stats"][stat] += statAmount
+                print("Your", stat, "went up by", statAmount)
+
+                
 
         if eventProperties["HealthRestore"]:
             playerData["Stats"]["Health"] = defaultHealth
+            print("")
             print("restored health")
-            gameLoop()
+            print("")
+        
+        
 
         else:
             gameLoop()
@@ -829,12 +1462,17 @@ def moveForward():
         print("You encountered a", enemySelected)
         combat(enemySelected)
 
+#MARK: COMBAT
 def combat(enemySelected):
     global enemyStunned
+    global enemyDamage
     enemyProperties = enemies[enemySelected]
-    stunChance = playerData["Stats"]["Defence"] * 3
+    shield = playerData["EquippedItems"].get("Sheild")
+    stunChance = shield[2] * 3 if shield else 1
+    runChance = playerData["Stats"]["Agility"] * 3
+    runChance -= enemyProperties["Stats"]["Agility"] 
 
-    while playerData["Stats"]["Health"] > 0:
+    while playerData["Stats"]["Health"] > 1:
         playerAtkChoice = str.upper(input("Attack(A), Defend(D), Run(R), Stats(S), Enemy Stats(E), Help(H): "))
 
         if playerAtkChoice == "A":
@@ -865,8 +1503,7 @@ def combat(enemySelected):
                 print("You did:", playerDamage, "damage to the enemy, but the enemy did", enemyDamage, "damage to you!") # enemy hit player
                 print("Your new health is:", playerData["Stats"]["Health"], ", the enemies health is:", enemyProperties["Stats"]["Health"])
                 
-        elif playerAtkChoice == "D":
-            print("Player Defended!")
+        elif playerAtkChoice == "D": #############################################
             stun = random.randint(0, 100)
             
             if stun >= stunChance:
@@ -877,7 +1514,20 @@ def combat(enemySelected):
                 print("Enemy hit you")
         
         elif playerAtkChoice == "R":
-            print("Player tried to run!")
+            run = random.randint(0, 100)
+
+            if run >= runChance:
+                gameLoop()
+
+            else:
+                print("")
+                print("You failed to run from the enemy!")
+                enemyDamage = enemyProperties["Stats"]["Attack"] - playerData["Stats"]["Defence"] 
+                playerData["Stats"]["Health"] -= enemyDamage
+                
+                print("The enemy did", enemyDamage, "damage to you!") # enemy hit player
+                print("Your new health is:", playerData["Stats"]["Health"], ", the enemies health is:", enemyProperties["Stats"]["Health"])
+
 
         elif playerAtkChoice == "S":
             print("")
@@ -933,7 +1583,6 @@ def combat(enemySelected):
                 for slot, item in playerData["Inventory"].items():
                     if item is None:  # Check if the slot is empty
                         playerData["Inventory"][slot] = dropProperties  # Place the item in the slot
-                        print("This is dropselected",dropSelected[1])
                         print(playerData["Inventory"])
                         gameLoop()
                         break
@@ -947,6 +1596,7 @@ def combat(enemySelected):
     ## Relates to the while loop, when the player dies, call this function.
     cleanupFunction()
 
+#MARK: QUEST BEGIN
 def questBegin():
     print("")
     print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.\n")
