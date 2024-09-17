@@ -313,6 +313,7 @@ ENEMY FORMAT:
 
 -Minibosses
     -Goblin Lord
+        
         "Sword Of The Goblin": ("Sword Of The Goblin", "Weapon", 25),
         "Darksteel Warhammer": ("Darksteel Warhammer", "Weapon", 30)
 
