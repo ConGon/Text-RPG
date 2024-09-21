@@ -1,5 +1,22 @@
 ENEMY FORMAT:
 
+"": {
+    "Stats":{
+        "Health": ,
+        "Attack": ,
+        "Agility": ,
+        "ExpValue": 
+    },
+
+    "Drops":{
+        
+    },
+
+    "DefaultHealth": ,
+
+    "DropChance": 
+},
+
 "Slime": {
         "Stats":{
             "Health": 20,
@@ -20,6 +37,115 @@ ENEMY FORMAT:
         "DropChance": 35
     },
 
+
+"Goblin Runt": {
+    "Stats": {
+        "Health": 50,
+        "Attack": 5,
+        "Agility": 10,
+        "ExpValue": 25
+    },
+
+    "Drops": {
+        "Rusty Dagger": ("Rusty Dagger", "Weapon", 5),
+        "Wooden Buckler": ("Wooden Buckler", "Shield", 3),
+        "Musty Skullcap": ("Musty Skullcap", "Head", 2),
+        "Cloth Gloves": ("Cloth Gloves", "Hands", 2)
+    },
+
+    "DefaultHealth": 50,
+    "DropChance": 0.3
+},
+
+"Goblin Thief": {
+    "Stats": {
+        "Health": 60,
+        "Attack": 15,
+        "Agility": 20,
+        "ExpValue": 30
+    },
+
+    "Drops": {
+        "Thieves' Gloves": ("Thieves' Gloves", "Hands", 8),
+        "Thieves Leggings": ("Thieves Leggings", "Legs", 10),
+        "Thieves Dagger": ("Thieves Dagger", "Weapon", 15)
+    },
+
+    "DefaultHealth": 60,
+    "DropChance": 0.25
+},
+
+"Goblin Warrior": {
+    "Stats": {
+        "Health": 80,
+        "Attack": 20,
+        "Agility": 15,
+        "ExpValue": 40
+    },
+
+    "Drops": {
+        "Leather Gloves": ("Leather Gloves", "Hands", 10),
+        "Broken Mail Leggings": ("Broken Mail Leggings", "Legs", 17),
+        "Goblin Sword": ("Goblin Sword", "Weapon", 27)
+    },
+
+    "DefaultHealth": 80,
+    "DropChance": 0.35
+},
+
+"Goblin Assassin": {
+    "Stats": {
+        "Health": 70,
+        "Attack": 25,
+        "Agility": 25,
+        "ExpValue": 45
+    },
+
+    "Drops": {
+        "Poisoned Dagger": ("Poisoned Dagger", "Weapon", 20),
+        "Assassin Garb": ("Assassin Garb", "Chest", 15),
+        "Assassin Slippers": ("Assassin Slippers", "Feet", 14)
+    },
+
+    "DefaultHealth": 70,
+    "DropChance": 0.28
+},
+
+"Goblin Brute": {
+    "Stats": {
+        "Health": 100,
+        "Attack": 30,
+        "Agility": 5,
+        "ExpValue": 50
+    },
+
+    "Drops": {
+        "Large Iron Rod": ("Large Iron Rod", "Weapon", 17),
+        "Heavy Iron Boots": ("Heavy Iron Boots", "Feet", 25),
+        "Ancient Plate Leggings": ("Ancient Plate Leggings", "Legs", 30)
+    },
+
+    "DefaultHealth": 100,
+    "DropChance": 0.4
+},
+
+"Spiderling": {
+    "Stats": {
+        "Health": 40,
+        "Attack": 12,
+        "Agility": 30,
+        "ExpValue": 20
+    },
+
+    "Drops": {
+        "Old Pilgrim's Spear": ("Old Pilgrim's Spear", "Weapon", 35),
+        "Old Adventurer's Boots": ("Old Adventurer's Boots", "Feet", 27)
+    },
+
+    "DefaultHealth": 40,
+    "DropChance": 0.15
+},
+
 "Wild Boar": {
         "Stats":{
             "Health": 40,
@@ -37,7 +163,24 @@ ENEMY FORMAT:
         "DropChance": 45
     },
 
-"Wolf": {
+"Feral Foxhound": {
+    "Stats": {
+        "Health": 55,
+        "Attack": 10,
+        "Agility": 35,
+        "ExpValue": 28
+    },
+
+    "Drops": {
+        "Foxenfur Pants": ("Foxenfur Pants", "Legs", 15),
+        "Foxenfur Shoes": ("Foxenfur Shoes", "Feet", 10)
+    },
+
+    "DefaultHealth": 55,
+    "DropChance": 0.2
+},
+
+"Grey Wolf": {
         "Stats":{
             "Health": 50,
             "Attack": 10,
@@ -53,6 +196,20 @@ ENEMY FORMAT:
 
         "DropChance": 40
     },
+
+"White Wolf": {
+    "Stats": {
+        "Health": 65,
+        "Attack": 20,
+        "Agility": 40,
+        "ExpValue": 35
+    },
+    "Drops": {
+        "White Bracers": ("White Bracers", "Arms", 15)
+    },
+    "DefaultHealth": 65,
+    "DropChance": 0.25
+},
 
 "Giant Rat": {
     "Stats":{
@@ -71,6 +228,52 @@ ENEMY FORMAT:
     "DefaultHealth": 65,
 
     "DropChance": 25
+},
+
+"Malevolent Sprite": {
+    "Stats": {
+        "Health": 80,
+        "Attack": 25,
+        "Agility": 50,
+        "ExpValue": 45
+    },
+    "Drops": {
+        "Enchanted Chain Leggings": ("Enchanted Chain Leggings", "Legs", 30),
+        "Blackened Pauldrons": ("Blackened Pauldrons", "Arms", 28),
+        "Sword Of Black": ("Sword Of Black", "Weapon", 38)
+    },
+    "DefaultHealth": 80,
+    "DropChance": 0.3
+},
+
+"Forest Wisp": {
+    "Stats": {
+        "Health": 90,
+        "Attack": 30,
+        "Agility": 60,
+        "ExpValue": 50
+    },
+    "Drops": {
+        "Sword O' The Forest": ("Sword O' The Forest", "Weapon", 44),
+        "Wisp Walkers": ("Wisp Walkers", "Feet", 30)
+    },
+    "DefaultHealth": 90,
+    "DropChance": 0.35
+},
+
+"Wandering Thief": {
+    "Stats": {
+        "Health": 75,
+        "Attack": 22,
+        "Agility": 25,
+        "ExpValue": 40
+    },
+    "Drops": {
+        "Trick Sword": ("Trick Sword", "Weapon", 24),
+        "Clothen Armguards": ("Clothen Armguards", "Arms", 17)
+    },
+    "DefaultHealth": 75,
+    "DropChance": 0.3
 },
 
 "Bandit": {
@@ -92,6 +295,38 @@ ENEMY FORMAT:
 
     "DropChance": 65
 },
+
+"Forest Poacher": {
+    "Stats": {
+        "Health": 85,
+        "Attack": 28,
+        "Agility": 30,
+        "ExpValue": 45
+    },
+    "Drops": {
+        "Boar Spear": ("Boar Spear", "Weapon", 29),
+        "Leather Pauldrons": ("Leather Pauldrons", "Arms", 20),
+        "Albino Bear Cloak": ("Albino Bear Cloak", "Arms", 45)
+    },
+    "DefaultHealth": 85,
+    "DropChance": 0.4
+},
+
+"Highwayman": {
+    "Stats": {
+        "Health": 95,
+        "Attack": 35,
+        "Agility": 20,
+        "ExpValue": 55
+    },
+    "Drops": {
+        "Zweihander": ("Zweihander", "Weapon", 37),
+        "Longsword": ("Longsword", "Weapon", 28),
+        "Plate Boots": ("Plate Boots", "Feet", 33)
+    },
+    "DefaultHealth": 95,
+    "DropChance": 0.5
+}
 
 "Skeleton warrior": {
     "Stats":{

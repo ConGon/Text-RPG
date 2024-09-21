@@ -1,14 +1,21 @@
 import math, random, copy
 
 defaultHealth = 100
-questStep = 0
+questStep = 15
+
 deathCounter = 0
 enemiesKilled = 0
 itemsCollected = 0
 
+maxStunChance = 65
+maxRunChance = 85
+
+#HIGHSCORE: YOU MANAGED TO GET 20 QUEST STEPS
+
 
 enemyStunned = False
 firstStep = True
+traderMenu = False
 
 #IDEA FOR SHOP
 #Create a table for all the items, and their price
@@ -34,9 +41,9 @@ levelData = [
 playerData = {
     "Stats":{
         "Health": 100,
-        "Attack": 5,
+        "Attack": 10,
         "Defence": 1, 
-        "Agility": 1,
+        "Agility": 5,
         "Level": 0,
         "Exp": 0,
         "Gold": 0
@@ -45,59 +52,59 @@ playerData = {
 
 
 # full inventory for testing
-    "Inventory":{
-        "Slot0": ("Old Shortsword", "Weapon", 10),
-        "Slot1": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot2": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot3": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot4": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot5": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot6": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot7": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot8": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot9": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot10": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot10": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot11":("Bruised Iron Leggings", "Legs", 5),
-        "Slot12": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot13": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot14": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot15": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot16": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot17": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot18": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot19": ("Bruised Iron Leggings", "Legs", 5),
-        "Slot20": ("Bruised Iron Leggings", "Legs", 5),
-    },
-
     # "Inventory":{
-    #     "Slot0": ("Old Shortsword", "Weapon", 10),
+    #     "Slot0": ("Bruised Iron Leggings", "Legs", 5),
     #     "Slot1": ("Bruised Iron Leggings", "Legs", 5),
-    #     "Slot2": None,
-    #     "Slot3": None,
-    #     "Slot4": None,
-    #     "Slot5": None,
-    #     "Slot6": None,
-    #     "Slot7": None,
-    #     "Slot8": None,
-    #     "Slot9": None,
-    #     "Slot10": None,
-    #     "Slot11": None,
-    #     "Slot12": None,
-    #     "Slot13": None,
-    #     "Slot14": None,
-    #     "Slot15": None,
-    #     "Slot16": None,
-    #     "Slot17": None,
-    #     "Slot18": None,
-    #     "Slot19": None,
-    #     "Slot20": None,
+    #     "Slot2": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot3": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot4": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot5": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot6": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot7": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot8": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot9": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot10": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot10": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot11":("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot12": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot13": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot14": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot15": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot16": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot17": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot18": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot19": ("Bruised Iron Leggings", "Legs", 5),
+    #     "Slot20": ("Bruised Iron Leggings", "Legs", 5),
     # },
+
+    "Inventory":{
+        "Slot0": None,
+        "Slot1": None,
+        "Slot2": None,
+        "Slot3": None,
+        "Slot4": None,
+        "Slot5": None,
+        "Slot6": None,
+        "Slot7": None,
+        "Slot8": None,
+        "Slot9": None,
+        "Slot10": None,
+        "Slot11": None,
+        "Slot12": None,
+        "Slot13": None,
+        "Slot14": None,
+        "Slot15": None,
+        "Slot16": None,
+        "Slot17": None,
+        "Slot18": None,
+        "Slot19": None,
+        "Slot20": None,
+    },
 
     "EquippedItems":{
         "Weapon": None,
-        "Shield": ("Ragged Leather Shield", "Shield", 1),
-        "Head": ("Musty Skullcap", "Head",  2),
+        "Shield": None,
+        "Head": None,
         "Chest": None,
         "Arms": None,
         "Hands": None,
@@ -108,11 +115,106 @@ playerData = {
 
 
 # MARK: MERCHANT HERE
+itemPrices = {
+    # Weapons (sorted by damage)
+    "Phoenix": 1000000000,
+    "Weeping Edge": 13400,
+    "Leviathan, Greatsword Of Brimstone": 15450,
+    "Mammon, Spear Of The Underworld": 12300,
+    "Relic Sword": 5340,
+    "Gemstone Greatsword": 6500,
+    "Giant Blade": 1000,
+    "Blade OF Fire": 550,
+    "Ruby Blade": 1500,
+    "Poisoned Dagger": 530,
+    "Duelist Rapier": 240,
+    "Large Iron Rod": 10,
+    "Straight Sword": 170,
+    "Wind Spear": 250,
+    "Thieves Dagger": 75,
+    "Bear Claw": 200,
+    "Hefty Cleaver": 75,
+    "Goblin Sword": 45,
+    "Cultist Dagger": 100,
+    "Forgotten Sword": 450,
+    "Rusty Dagger": 15,
+    "Old Stick": 1,
+    "Expensive Trinket": 4500,
+    "Red Gemstone": 2000,
+    "Green Gemstone": 3000,
 
+    # Shields (sorted by defense)
+    "Knight's Shield": 650,
+    "Golden Shield": 2540,
+    "Platinum Buckler": 1900,
+    "Steel Buckler": 150,
+    "Old Iron Shield": 100,
+    "Old Shield": 25,
+    "Wooden Buckler": 5,
+
+    # Head (sorted by defense)
+    "Doomseer": 7500,
+    "Gold Mask": 25000,
+    "Horned Helm": 650,
+    "Bear Pelt": 500,
+    "Platinum Crown": 2500,
+    "Ceremonial Hood": 300,
+    "Cloth Bandana": 50,
+    "Musty Skullcap": 5,
+
+    # Chest (sorted by defense)
+    "Seal of Murmur": 13000,
+    "Hell Plate": 2500,
+    "Ancient Plate Cuirass": 750,
+    "Cultist Robe": 500,
+    "Assassin Garb": 250,
+    "Crude Breastplate": 150,
+    "Trader's Garb": 350,
+    "Wolf Pelt": 150,
+    "Rat Armor": 500,
+
+    # Feet (sorted by defense)
+    "Plate Boots": 500,
+    "Wisp Walkers": 750,
+    "Old Adventurer's Boots": 300,
+    "Heavy Iron Boots": 245,
+    "Enchanted Boots": 1000,
+    "Assassin Slippers": 150,
+    "Slimy Boots": 15,
+    "Leather Boots": 50,
+
+    # Arms (sorted by defense)
+    "Blackened Pauldrons": 545,
+    "Leather Pauldrons": 250,
+    "Clothen Armguards": 55,
+    "White Bracers": 500,
+    "Slimy Vambraces": 25,
+    "Thieves Gloves": 10,
+    "Rusted Iron Vambraces": 35,
+
+    # Legs (sorted by defense)
+    "Ancient Plate Leggings": 450,
+    "Broken Mail Leggings": 245,
+    "Foxenfur Pants": 500,
+    "Thieves Leggings": 45,
+    "Mail Chausses": 75,
+    "Crude Mail Leggings": 25,
+    "Boar Pelt": 350,
+    "Bruised Iron Leggings": 15,
+
+    # Hands (sorted by defense)
+    "Hell Gauntlets": 550,
+    "Leather Gloves": 35,
+    "Mail Mittens": 85,
+    "Strange Gloves": 50,
+    "Thieves Gloves": 30,
+    "Cloth Gloves": 25,
+    "Stinking Gloves": 5
+}
 #Merchant can sell armor and weapons, potions and even information.
 #You can also sell your gear to the merchant
 
-# MARK: MERCHANT HERE
+#MARK: FINAL BOSSES
 finalBosses = {
     "Demon Lord": {
         "Stats":{
@@ -128,6 +230,7 @@ finalBosses = {
             "Weeping Edge": ("Weeping Edge", "Weapon", 135),
             "Doomseer": ("Doomseer", "Head", 130),
             "Seal of Murmur": ("Seal of Murmur", "Chest", 150)
+        
         },
 
         "DefaultHealth": 5000,
@@ -151,12 +254,11 @@ finalBosses = {
         "DefaultHealth": 5000,
 
         "DropChance": 90
-
     },
 
 }
 
-
+#MARK: MINIBOSSES
 miniBosses = {
     "Goblin Lord": {
         "Stats":{
@@ -347,7 +449,6 @@ enemies = {
         },
 
         "Drops":{
-            "Old Shortsword": ("Old Shortsword", "Weapon", 10),
             "Bruised Iron Leggings": ("Bruised Iron Leggings", "Legs", 5),
             "Battered Iron Helm": ("Battered Iron Helm", "Head", 5),
             "Rusted Iron Vambraces": ("Rusted Iron Vambraces", "Arms", 5)
@@ -470,7 +571,7 @@ enemies = {
             "Mail Helm": ("Mail Helm", "Head", 8),
             "Mail Shirt": ("Mail Shirt", "Chest", 15),
             "Mail Vambraces": ("Mail Vambraces", "Arms", 8),
-            "Mail Mittens": ("Mail Mittens", "Hands", 6),
+            "Mail Mittens": ("Mail Mittens", "Hands", 17),
             "Mail Chausses": ("Mail Chausses", "Legs", 13)
         },
 
@@ -1018,7 +1119,7 @@ A horned helm! It's not the greatest helmet but at least it's not a troll..."""
 """You happen upon what appears to be a library of some sort,
 disguised as a small hill. But it has long since decayed and
 crumbled under its own weight, making the disguise ineffective.
-You search for any surviving tomes and scrolls, but fail to find anything
+You search for any surviving tomes or scrolls, but fail to find anything
 of note. Just as you're about to leave the ruins, you notice on a decayed
 shelf: An ancient artifact, a thing of pure beauty. It is a levitating onyx jewel
 inside of a crystal ball. It is small enough to fit in your pocket, but the
@@ -1123,7 +1224,7 @@ After many hours, you continue your journey."""
 """You tire from many days travel, and so you seek out shelter to rest.
 You spot a shaded meadow, with trees surrounding it. You lay against a tree and
 look through your baggage. Many hours pass and you pick yourself up and continue,
-but as you get up, you notice ancient an ancient Plate Cuirass, lying in the grass
+but as you get up, you notice an ancient Plate Cuirass, lying in the grass
 beside you. Suprised that you didn't see it before, you inspect it. Though it is old,
 it is full plate, and will provide great protection from the dangers to come."""
 },
@@ -1205,11 +1306,11 @@ defaultEnemysData = copy.deepcopy(enemies)
 ## Resets everything when player dies
 # MARK: CLEANUP FUNCTION
 def cleanupFunction():
-    global playerData, enemies, firstStep, enemyStunned, deathCounter
+    global playerData, enemies, firstStep, enemyStunned, deathCounter, questStep
     deathCounter += 1
+    questStep = 0
     print("You died, your quest is over.")
     
-
     # Resets player's and enemies data
     playerData = copy.deepcopy(defaultPlayerData)
     enemies = copy.deepcopy(defaultEnemysData)
@@ -1247,7 +1348,7 @@ def itemEquipFunction(equipItemInput):
 
     else:
 
-        inventoryItemSelected = playerData["Inventory"][capitalEquipItemInput] # == ('Old Shortsword', 'Weapon', 10)
+        inventoryItemSelected = playerData["Inventory"][capitalEquipItemInput] 
         inventoryItemName = inventoryItemSelected[0]
         inventoryItemType = inventoryItemSelected[1]
         inventoryItemStat = inventoryItemSelected[2]
@@ -1298,13 +1399,14 @@ def equipItem(inventoryItemName, inventoryItemStat):
 
             if equipItemInput in [f"SLOT{i}" for i in range(21)]:
                 itemEquipFunction(equipItemInput)
-                break
+                
 
             elif equipItemInput == "H":
                 print("")
                 print("Input the inventory slot of the item you want to equip,")
                 print("For example; If you say 'Slot1', the item in Slot1 will")                        
                 print("be equipped, unless there is an item already equipped in that slot.") 
+                print("")
 
             elif equipItemInput == "B":
                 print("")
@@ -1408,9 +1510,14 @@ def unequipItem():
             print("To unequip any head armor.")
 
         elif unequipItemInput == "B":
-            print("player tried to go back")
-            equip()
-            break
+
+            if not traderMenu:
+                equip()
+                break
+            
+            else:
+                trader()
+
 
         else:
             print("")
@@ -1468,14 +1575,17 @@ def equipHelp():
         if equipHelpInput == "E":
             print("")
             print("Allows you to equip weapons and armor.")
+            print("")
 
         elif equipHelpInput == "U":
             print("")
             print("Allows you to unequip weapons and armor.")
+            print("")
 
         elif equipHelpInput == "D":
             print("")
             print("Allows you to discard or drop an item.")  
+            print("")
 
         elif equipHelpInput == "B":
             print("")
@@ -1518,19 +1628,17 @@ def equip():
 
 def dropItemReplaceFunction(dropItemInput, dropProperties):
         dropItemInputCapitalized = dropItemInput.capitalize()
+        print("You replaced:", playerData["Inventory"][dropItemInputCapitalized], "With:", dropProperties)
+        print("")
         playerData["Inventory"][dropItemInputCapitalized] = dropProperties
-        print("")
-        print(playerData["Inventory"])
-        print("")
         gameLoop()
 
 def dropItemReplace (dropProperties):
-    print("Your inventory is full, replace any item in your inventory with the one you aquired, or go back.")
-    print("")
     print("Your Inventory:", playerData["Inventory"])
     while True:
         print("")
         dropItemInput = str.upper(input("Back(B) | Help(H) | Replace item Slot#: "))
+        print("")
 
         if dropItemInput in [f"SLOT{i}" for i in range(21)]:
             dropItemReplaceFunction(dropItemInput, dropProperties)
@@ -1574,7 +1682,7 @@ def rest():
     
 
     elif playerData["Stats"]["Health"] != 100:
-        playerData["Stats"]["Health"] = 10 + playerData["Stats"]["Agility"]
+        playerData["Stats"]["Health"] = playerData["Stats"]["Health"] + 10 + playerData["Stats"]["Agility"]
 
         if playerData["Stats"]["Health"] >= 101:
             playerData["Stats"]["Health"] = 100
@@ -1590,27 +1698,27 @@ def rest():
 # MARK: MAIN HELP
 def mainHelp():
     while True:
+        print("")
         helpMoveInput = str.upper(input("Help with: Move forward(M) | Inventory(I) | Equip Menu(E) | Rest(R) | Back(B): "))
 
         if helpMoveInput == "M":
             print("")
             print("Moves you forward. % chance for enemy encounter, % chance for random event.\nAlso increases the quest step, until step 20, where you fight the final boss.")
-            print("")
 
         elif helpMoveInput == "I":
             print("")
             print("Shows all items within your inventory. Each item has a name, item type, and stat, in that order.\nExample: Rusty Dagger, Weapon, 5. The stat for weapons is attack, the stat for shield and armor is defence.  ")
-            print("")
+           
 
         elif helpMoveInput == "E":
             print("")
             print("Allows you to equip weapons and armor.")
-            print("") 
+            
             
         elif helpMoveInput == "R":
             print("")
             print("Allows you to rest for a turn, which heals you 25 health + agility\nHas a chance of enemy ambush")
-            print("")
+            
         elif helpMoveInput == "B":
             print("")
             gameLoop()
@@ -1627,9 +1735,96 @@ def stats():
     print("")
     gameLoop()
 
+def trade():
+    print("reee")
+
+#MARK: SELLXXXXXXX
+def sellFunction(sellInput):
+    #Loop through the prices table AND the players inventory
+    #Print the item prices of the items that the player HAS
+    sellInputCapitalized = sellInput.capitalize()
+
+    soldItemMain = playerData["Inventory"][sellInputCapitalized]
+    soldItemName = soldItemMain[0]
+    soldItemType = soldItemMain[1]
+    soldItemStat = soldItemMain[2]
+
+    playerData["Stats"]["Gold"] += itemPrices[soldItemName]
+    playerData["Inventory"][sellInputCapitalized] = None
+    print(playerData["Inventory"])
+    print("")
+    print("You sold:", soldItemName, "for:", itemPrices[soldItemName], "Gold")
+    print("")
+    sell()
+
+def sell():
+    
+    while True:
+        sellInput = str.upper(input("Back(B) | Slot#: "))
+        if sellInput in [f"SLOT{i}" for i in range(21)]:
+            sellFunction(sellInput)
+            
+
+        elif sellInput == "B":
+            print("")
+            trader()
+            break
+
+        else:
+            print("")
+            print("Invalid Input")    
+            print("")
+      
+# traderResponses = {
+
+#      "GenericResponses":
+#     "questStep5Responses": {
+
+#     },
+
+#     "QuestStep10Responses": {
+
+
+#     }
+
+# }
+
+#MARK: TRADE!!!!!!!!!!
+def trader():
+    global traderMenu, questStep
+    traderMenu = True
+
+    while True:
+        traderInput = str.upper(input("Trade(T) | Sell(S) | Unequip(U) | Help(H) | Back(B): "))
+    
+        if traderInput == "T":
+            trade()
+            break
+
+        elif traderInput == "S":
+            sell()
+            break
+
+        elif traderInput == "U":
+            unequipItem()
+            break
+
+        elif traderInput == "B":
+            traderMenu = False
+            questStep+= 1
+            gameLoop()
+            break
+            
+        else:
+            print("")
+            print("Invalid Input")
+            print("")
+
+
 #MARK: MAIN GAME LOOP!!!
 def gameLoop():
     global questStep, firstStep
+    print(questStep)
     while True:
 
         if questStep == 0 and firstStep:
@@ -1639,26 +1834,57 @@ def gameLoop():
             firstStep = False
             
         elif questStep == 5:
+            print("First time player sees trader, dialogue will be")
+            trader()
+            #shopkeeper function here
+
+        elif questStep == 10:
             print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
             #shopkeeper function here
 
         elif questStep == 15:
-            print("First miniboss here")
+            print("You hear cackling and malicious laughter from behind you")
+            combat("Goblin Lord")
+
+        elif questStep == 20:
+            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+            #shopkeeper function here
 
         elif questStep == 25:
             print("Second miniboss here")
 
+
+        elif questStep == 30:
+            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+            #shopkeeper function her
+
         elif questStep == 35: 
             print("Third miniboss here")
+
+        elif questStep == 40:
+            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+            #shopkeeper function here
 
         elif questStep == 45:
             print("Final miniboss goes here")
 
+        elif questStep == 50:
+            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+            #shopkeeper function here
+
         elif questStep == 65:
             print("player reached quest step 65, final boss goes here")
 
+        elif questStep == 85:
+            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+            #shopkeeper function here
+
         elif questStep == 100:
-            print("True final boss goes here")
+            print("From high heavens, a being of true might decended. He first peirced the firmament,")
+            print("then the skies, and soon, impacted the ground before your feet. A crater of unfathomable preportions now lie in front of you.")
+            print("The skies stirred with dark power, and a great storm was now among the lands. You stood your ground, knowing that this would be")
+            print("Your final battle. Through the dust and fire, the malevolent being marched forward. Eventually, he came within your sight, and all you knew was this:")
+            print("an evil god now stood before you")  
 
         playerChoice = str.upper(input("Move forward(M) | Equip Menu(E) | Rest(R) | Inventory(I) | Equipped Weapons & Armor(W) | Stats(S) | Help(H): "))
     
@@ -1679,6 +1905,11 @@ def gameLoop():
         elif playerChoice == "R": 
             rest()  
             break
+        
+        elif playerChoice == "W":
+            print("")
+            print("Equipped Items:", playerData["EquippedItems"])
+            print("")
 
         elif playerChoice == "S":
             stats()
@@ -1698,7 +1929,7 @@ def moveForward():
     global questStep, defaultHealth
     enemyOrEvent = random.randint(0, 100)
     
-    if enemyOrEvent >= 90: #Encountered Random Event:
+    if enemyOrEvent <= 90: #Encountered Random Event:
 
         eventSelected = random.choice(list(randomEvents.keys()))
         eventProperties = randomEvents[eventSelected]
@@ -1709,7 +1940,7 @@ def moveForward():
 
             if statAmount:
                 playerData["Stats"][stat] += statAmount
-                print("Your", stat, "went up by", statAmount)
+                print("Your", stat, "went up by:", statAmount)
 
         if eventProperties["HealthRestore"]:
             playerData["Stats"]["Health"] = defaultHealth
@@ -1732,10 +1963,9 @@ def moveForward():
                         dropItemReplace(dropItem)
 
                     if item is None:  # Check if the slot is empty
-                        print("You aquired: ", dropItem)
-                        playerData["Inventory"][slot] = dropItem  # Place the item in the slot
+                        print("You aquired:", dropItem)
                         print("")
-                        print("Your Inventory:", playerData["Inventory"])
+                        playerData["Inventory"][slot] = dropItem  # Place the item in the slot
                         gameLoop()
 
                 
@@ -1755,16 +1985,25 @@ def moveForward():
 
 #MARK: COMBAT
 def combat(enemySelected):
-    global enemyStunned
-    global enemyDamage
-    enemyProperties = enemies[enemySelected]
+    global enemyStunned, enemyDamage, maxStunChance, maxRunChance
+    
+    if enemySelected == "Goblin Lord" or "Dark Sorcerer" or "Stone Golem" or "Dragon" or "Demon Lord":
+        enemyProperties = miniBosses[enemySelected]
+        print("")
+        print("You encountered a", enemySelected)
+        print("")
+
+    else:
+        enemyProperties = enemies[enemySelected]
+
     shield = playerData["EquippedItems"].get("Shield")
-    stunChance = shield[2] * 3 if shield else 1
+    stunChance = shield[2] * 2.5 if shield else 1
     runChance = playerData["Stats"]["Agility"] * 3
     runChance -= enemyProperties["Stats"]["Agility"] 
 
-    if stunChance >= 95:
-        stunChance = 95
+    #Max stun chance is CURRENTLY 65
+    if stunChance >= maxStunChance:
+        stunChance = maxStunChance
 
     while playerData["Stats"]["Health"] >= 0:
 
@@ -1804,10 +2043,10 @@ def combat(enemySelected):
                 print("You did:", playerDamage, "damage to the enemy, but the enemy did", enemyDamage, "damage to you!") # enemy hit player
                 print("Your new health is:", playerData["Stats"]["Health"], ", the enemies health is:", enemyProperties["Stats"]["Health"])
                 print("")
-        elif playerAtkChoice == "D": #############################################
+        elif playerAtkChoice == "D": 
             stun = random.randint(0, 100)
             
-            if stun >= stunChance:
+            if stun <= stunChance:
                 enemyStunned = True
                 print("")
                 print("You dodged the enemy!")
@@ -1815,8 +2054,21 @@ def combat(enemySelected):
 
             else:
                 print("")
-                print("Enemy hit you")
-                print("")
+                print("You failed to block!")
+                if enemyProperties["Stats"]["Attack"] <= playerData["Stats"]["Defence"]:
+                    playerData["Stats"]["Health"] -= 1
+                    print("")
+                    print("the enemy did 1 damage to you!")
+                    print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
+                    print("")
+
+                else:
+                    enemyDamage = enemyProperties["Stats"]["Attack"] - playerData["Stats"]["Defence"] 
+                    playerData["Stats"]["Health"] -= enemyDamage
+                    print("")
+                    print("the enemy did", enemyDamage, "damage to you!")
+                    print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
+                    print("")
         
         elif playerAtkChoice == "R":
             run = random.randint(0, 100)
@@ -1824,10 +2076,11 @@ def combat(enemySelected):
             if runChance <= 0:
                 runChance = 1
             
-            if run > 99:
-                run = 99
+            if run > maxRunChance:
+                run = maxRunChance
 
             if run <= runChance:
+                print("You ran from the enemy!")
                 gameLoop()
 
             else:
@@ -1844,10 +2097,12 @@ def combat(enemySelected):
         elif playerAtkChoice == "S":
             print("")
             print(playerData["Stats"])
+            print("")
 
         elif playerAtkChoice == "E":
             print("")
             print(enemySelected, "Health:", enemyProperties["Stats"]["Health"], "|", "Attack:", enemyProperties["Stats"]["Attack"], "|", "Agility:", enemyProperties["Stats"]["Agility"] )
+            print("")
 
         elif playerAtkChoice == "H":
             while True:
@@ -1898,17 +2153,20 @@ def combat(enemySelected):
                 
                 for slot, item in playerData["Inventory"].items():
                     if slot == "Slot20" and item != None:
-                        print("Inventory Full")
+                        print(enemySelected, "Dropped:", dropProperties)
+                        print("")
+                        print("But your inventory is full, Replace an item")
+                        print("in your inventory With the one you aquired.")
+                        print("")
                         dropItemReplace(dropProperties)
 
                     if item is None:  # Check if the slot is empty
-                        print("You aquired: ", dropSelected)
+                        print("You aquired:", dropSelected)
+                        print("")
                         playerData["Inventory"][slot] = dropProperties  # Place the item in the slot
-                        print(playerData["Inventory"])
                         gameLoop()
 
             else:
-                print("no drops :(")
                 gameLoop()
                 break
         

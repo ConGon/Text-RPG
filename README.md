@@ -1,1 +1,1 @@
-This is my text based rpg code game. Simple and experimental.
+This is my text based RPG! 

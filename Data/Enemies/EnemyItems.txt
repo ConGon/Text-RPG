@@ -4,27 +4,88 @@ ITEM FORMAT: "": ("", "", )
     "Slimy Boots": ("Slimy Boots", "Feet", 8),
     "Slimy Vambraces": ("limy Vambraces", "Arms", 10)
 
--Goblin
+-Goblin Runt 
     "Rusty Dagger": ("Rusty Dagger", "Weapon", 5),
     "Wooden Buckler": ("Wooden Buckler", "Shield", 3),
     "Musty Skullcap": ("Musty Skullcap", "Head",  2),
     "Cloth Gloves": ("Cloth Gloves", "Hands", 2)
 
+-Goblin Thief 
+    "Thieves' Gloves": ("Thieves' Gloves", "Hands", 8),
+    "Thieves Leggings": ("Thieves Leggings", "Legs", 10),
+    "Thieves Dagger": ("Thieves Dagger", "Weapon", 15)
+
+-Goblin Warrior 
+    "Leather Gloves": ("Leather Gloves", "Hands", 10),
+    "Broken Mail Leggings": ("Broken Mail Leggings", "Legs", 17),
+    "Goblin Sword": ("Goblin Sword", "Weapon", 27)
+
+-Goblin Assassin 
+    "Poisoned Dagger": ("Poisoned Dagger", "Weapon", 20),
+    "Assassin Garb": ("Assassin Garb", "Chest", 15),
+    "Assassin Slippers": ("Assassin Slippers", "Feet", 14)
+
+-Goblin Brute 
+    "Large Iron Rod": ("Large Iron Rod", "Weapon", 17),
+    "Heavy Iron Boots": ("Heavy Iron Boots", "Feet", 25),
+    "Ancient Plate Leggings": ("Ancient Plate Leggings", "Legs", 30)
+
+-Spiderling 
+    "Old Pilgrim's Spear": ("Old Pilgrim's Spear", "Weapon", 35),
+    "Old Adventurer's Boots": ("Old Adventurer's Boots", "Feet", 27)
+
 -Wild Boar
     "Boar Pelt": ("Boar Pelt", "Legs", 7)
 
--Wolf
-"Wolf Pelt": ("Wolf Pelt", "Chest", 6)
+-Gnoll Theif 
+    "Old Chainmail Socks": ("Old Chainmail Socks", "Feet", 20)
+
+-Gnoll Warrior 
+    "Gnollhide Leggings": ("Gnollhide Leggings", "Legs", 25),
+    "Gnollhide Boots": ("Gnollhide Boots", "Feet", 19)
+
+-Feral Foxhound 
+    "Foxenfur Pants": ("Foxenfur Pants", "Legs", 15),
+    "Foxenfur Shoes": ("Foxenfur Shoes", "Feet", 10)
+
+-Grey Wolf 
+    "Wolf Pelt": ("Wolf Pelt", "Chest", 6)
+
+-White Wolf 
+    "White Bracers": ("White Bracers", "Arms", 15)
 
 -Giant Rat
     "Rat Armor": ("Rat Armor", "Chest", 1),
     "Stinking Gloves": ("Stinking Gloves", "Hands", 2),
     "Forgotten Blade": ("Forgotten Blade", "Weapon", 35)
 
+-Malevolant Sprite 
+    "Enchanted Chain Leggings": ("Enchanted Chain Leggings", "Legs", 30),
+    "Blackened Pauldrons": ("Blackened Pauldrons", "Arms", 28),
+    "Sword Of Black": ("Sword Of Black", "Weapon", 38)
+
+-Forest Wisp 
+    "Sword O' The Forest": ("Sword O' The Forest", "Weapon", 44),
+    "Wisp Walkers": ("Wisp Walkers", "Feet", 30)
+
+-Wandering Theif 
+    "Trick Sword": ("Trick Sword", "Weapon", 24),
+    "Clothen Armguards": ("Clothen Armguards", "Arms", 17)
+
 -Bandit
     "Steel Dagger": ("Steel Dagger", "Weapon", 15),
     "Cloth Bandana": ("Cloth Bandana", "Head", 3),
     "Leather Boots": ("Leather Boots", "Feet", 3)
+    
+-Forest Poacher 
+    "Boar Spear": ("Boar Spear", "Weapon", 29)
+    "Leather Pauldrons": ("Leather Pauldrons", "Arms", 20)
+    "Albino Bear Cloak": ("Albino Bear Cloak", "Arms", 45)
+
+-Highwayman NEW
+    "Zweihander": ("Zweihander", "Weapon", 37) 
+    "Longsword": ("Longsword", "Weapon", 28)
+    "Plate Boots": ("Plate Boots", "Feet", 33)
 
 -Skeleton warrior
     "Old Shortsword": ("Old Shortsword", "Weapon", 10),
@@ -119,3 +180,5 @@ Final boss: Demon Lord
 
 True final boss: Apollyon, Avatar Of Pride
     "Phoenix": ("Phoenix", "Weapon", 1000)
+
+    

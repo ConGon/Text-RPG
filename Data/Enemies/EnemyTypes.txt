@@ -1,0 +1,42 @@
+Slime
+Goblin Runt
+Goblin Thief
+Goblin Warrior
+Goblin Assassin
+Goblin Brute
+Spiderling
+Wild Boar
+Feral Foxhound
+Grey Wolf
+White Wolf
+Giant Rat
+Malevolent Sprite
+Forest Wisp
+Wandering Thief
+Bandit
+Forest Poacher
+Highwayman
+Skeleton Warrior
+Skeleton ShieldBearer
+Imp
+Bear
+Orc
+Devil Cultist
+Wandering Duelist
+Strange Mercenary
+Troll
+Mimic
+Demon
+
+Goblin Lord (Miniboss)
+Dark Sorcerer (Miniboss)
+Stone Golem (Miniboss)
+Dragon (Miniboss)
+
+Demon Lord (Final Boss)
+
+Apollyon, Avatar Of Pride (True Final Boss)
+
+
+
+    
