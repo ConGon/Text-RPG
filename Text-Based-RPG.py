@@ -1,15 +1,13 @@
 import math, random, copy
 
-#NEED TO FIX SELLING, NEED TO CHECK IF SLOT IS EMPTY
-
-
-#After killing a miniboss, new enemies appear
-
-#How much players can allocate to skills when they level up
+#How much stat allocation points player gets every level up
 levelUpStats = 5
 
 defaultHealth = 100
 questStep = 25
+
+restHealthGain = 10
+ambushHealthAgilityPercent = 0.25
 
 plrAttributePoints = 0
 deathCounter = 0
@@ -18,12 +16,14 @@ itemsCollected = 0
 
 maxStunChance = 65
 maxRunChance = 85
-randomEventChance = 40
+randomEventChance = 60
+defaultAmbushChance = 35
 
 enemyStunned = False
 firstStep = True
 traderMenu = False
 
+# Each thing is encountered at this quest step
 trader1 = 5
 trader2 = 10
 goblinLordEncounter = 15
@@ -33,21 +33,21 @@ trader4 = 35
 stoneGolemEncounter = 40
 trader5 = 45
 dragonEncounter = 50
-trader6 = 55
-demonLordEncounter = 60
+trader6 = 65
+demonLordEncounter = 70
 trader7 = 85
 ApollyonEncounter = 100
 
 # MARK: PLAYER DATA
 playerData = {
     "Stats":{
-        "Health": 1000000,
-        "Attack": 50000,
+        "Health": 100,
+        "Attack": 1,
         "Defence": 1, 
         "Agility": 5,
         "Level": 0,
         "Exp": 0,
-        "Gold": 100000000000
+        "Gold": 0
     },
 
 # full inventory for testing
@@ -78,7 +78,7 @@ playerData = {
 
     "Inventory":{
         
-        "Slot0": None,
+        "Slot0": ("Old Shield", "Shield", 8),
         "Slot1": None,
         "Slot2": None,
         "Slot3": None,
@@ -283,7 +283,7 @@ traderGoods = {
         "Weapons": {
             "Zweihander": ("Zweihander", "Weapon", 20),
             "Highland Sword": ("Highland Sword", "Weapon", 15),
-            "Soldiers Spear": ("Soldiers Spear", "Weapon", 16),
+            "Soldier's Spear": ("Soldier's Spear", "Weapon", 16),
         },
 
         "Shields": {
@@ -415,132 +415,132 @@ traderGoods = {
 traderBuyPrices = {
     #Trader 1
     #Armors
-    "Clothen Cap": 15,
-    "Clothen Gambeson": 25,
-    "Clothen Bracers": 10,
-    "Clothen Gloves": 5,
-    "Clothen Leggings": 20,
-    "Clothen Boots": 8,
-    "Ruined Steel Helm": 50,
-    "Ruined Hauberk": 40,
+    "Clothen Cap": 50,
+    "Clothen Gambeson": 100,
+    "Clothen Bracers": 35,
+    "Clothen Gloves": 30,
+    "Clothen Leggings": 50,
+    "Clothen Boots": 35,
+    "Ruined Steel Helm": 175,
+    "Ruined Hauberk": 250,
 
     #Weapons
-    "Short Sword": 170,
+    "Straight Sword": 170,
 
     #Shields
-    "Reinforced Wooden Shield": 25,
-    "Ancient Iron Shield": 100,
+    "Reinforced Wooden Shield": 75,
+    "Ancient Iron Shield": 150,
 
     # Trader 2
     # Armors
-    "Cheap Chainmail Cap": 30,
-    "Cheap Chainmail Shirt": 50,
-    "Cheap Chainmail Vambraces": 20,
-    "Cheap Chainmail Mittens": 15,
-    "Cheap Chainmail Leggings": 35,
-    "Cheap Chainmail Socks": 10,
+    "Cheap Chainmail Cap": 200,
+    "Cheap Chainmail Shirt": 235,
+    "Cheap Chainmail Vambraces": 195,
+    "Cheap Chainmail Mittens": 165,
+    "Cheap Chainmail Leggings": 200,
+    "Cheap Chainmail Socks": 150,
 
     # Weapons
-    "Zweihander": 200,
-    "Highland Sword": 150,
-    "Soldier's Spear": 160,
+    "Zweihander": 350,
+    "Highland Sword": 500,
+    "Soldier's Spear": 350,
 
     # Shields
-    "Steel Buckler": 75,
-    "Viking Shield": 90,
+    "Steel Buckler": 200,
+    "Viking Shield": 375,
 
     # Trader 3
     # Armors
-    "Iron Plate Helm": 60,
-    "Iron Plate Breastplate": 80,
-    "Iron Plate Pauldrons": 45,
-    "Iron Plate Gauntlets": 35,
-    "Iron Plate Chausses": 55,
-    "Iron Plate Boots": 30,
-    "Lordly Plated Helm": 90,
+    "Iron Plate Helm": 500,
+    "Iron Plate Breastplate": 685,
+    "Iron Plate Pauldrons": 550,
+    "Iron Plate Gauntlets": 450,
+    "Iron Plate Chausses": 650,
+    "Iron Plate Boots": 500,
+    "Lordly Plated Helm": 1350,
 
     # Weapons
-    "Scimitar": 180,
-    "Knights Sword": 240,
-    "Steel Pernach": 250,
-    "Blessed Sword": 350,
+    "Scimitar": 1000,
+    "Knights Sword": 1300,
+    "Steel Pernach": 1250,
+    "Blessed Sword": 2500,
 
     # Shields
-    "Knights Shield": 110,
-    "Tower Shield": 150,
-    "Decorated Shield": 200,
+    "Knights Shield": 750,
+    "Tower Shield": 500,
+    "Decorated Shield": 1000,
 
     # Trader 4
     # Armors
-    "Darksteel Plate Helm": 80,
-    "Darksteel Plate Breastplate": 120,
-    "Darksteel Plate Pauldrons": 50,
-    "Darksteel Plate Gauntlets": 40,
-    "Darksteel Plate Chausses": 60,
-    "Darksteel Plate Boots": 35,
-    "Helm Of The Fallen Hero": 150,
-    "Dragonskin Boots": 170,
+    "Darksteel Plate Helm": 1500,
+    "Darksteel Plate Breastplate": 2300,
+    "Darksteel Plate Pauldrons": 1950,
+    "Darksteel Plate Gauntlets": 1450,
+    "Darksteel Plate Chausses": 1670,
+    "Darksteel Plate Boots": 1600,
+    "Helm Of The Fallen Hero": 3750,
+    "Dragonskin Boots": 3950,
 
     # Weapons
-    "Knings Blade": 400,
-    "Sword Of Slashing": 350,
-    "Damascus Odachi": 450,
-    "Bane": 375,
+    "Knings Blade": 3000,
+    "Sword Of Slashing": 3850,
+    "Damascus Odachi": 5500,
+    "Bane": 5200,
 
     # Shields
-    "Darksteel Shield": 200,
-    "Shield Of Deflecting": 250,
+    "Darksteel Shield": 2500,
+    "Shield Of Deflecting": 3450,
 
     # Trader 5
     # Armors
-    "Lordly Enchanted Helm": 200,
-    "Lordly Enchanted Breastplate": 300,
-    "Lordly Enchanted Pauldrons": 100,
-    "Lordly Enchanted Gauntlets": 80,
-    "Lordly Enchanted Chausses": 150,
-    "Lordly Enchanted Boots": 75,
-    "Breastplate Of The Hero": 350,
+    "Lordly Enchanted Helm": 4000,
+    "Lordly Enchanted Breastplate": 5600,
+    "Lordly Enchanted Pauldrons": 5350,
+    "Lordly Enchanted Gauntlets": 4350,
+    "Lordly Enchanted Chausses": 4750,
+    "Lordly Enchanted Boots": 4300,
+    "Breastplate Of The Hero": 7500,
 
     # Weapons
-    "Ginormous Sword": 500,
-    "Blade Of The Emperor": 600,
-    "Slayer": 550,
+    "Ginormous Sword": 8000,
+    "Blade Of The Emperor": 10000,
+    "Slayer": 7500,
 
     # Shields
-    "Ginormous Shield": 450,
-    "Shield Of The Hero": 550,
-    "Drakon Aspida": 600,
+    "Ginormous Shield": 7500,
+    "Shield Of The Hero": 9450,
+    "Drakon Aspida": 11000,
 
     # Trader 6
     # Armors
-    "Daimoniki Kefali": 350,
-    "Daimoniki Thorakisi": 500,
-    "Daimonika Cheria": 200,
-    "Daimonika Cheirofilla": 150,
-    "Daimonika Podia": 250,
-    "Daimonika Pelmata": 125,
+    "Daimoniki Kefali": 10000,
+    "Daimoniki Thorakisi": 13500,
+    "Daimonika Cheria": 12000,
+    "Daimonika Cheirofilla": 12300,
+    "Daimonika Podia": 10500,
+    "Daimonika Pelmata": 9900,
 
     # Weapons
-    "Sfageio tou Daimona": 700,
+    "Sfageio tou Daimona": 15000,
 
     # Shields
-    "Aspida tou Daimonoktonou": 500,
+    "Aspida tou Daimonoktonou": 14500,
 
     # Trader 7
     # Armors
-    "Helm Of The Demigod": 600,
-    "Chestplate Of The Demigod": 800,
-    "Pauldrons Of The Demigod": 300,
-    "Gauntlets Of The Demigod": 200,
-    "Chausses Of The Demigod": 400,
-    "Boots Of The Demigod": 150,
+    "Helm Of The Demigod": 25000,
+    "Chestplate Of The Demigod": 30000,
+    "Pauldrons Of The Demigod": 27500,
+    "Gauntlets Of The Demigod": 22500,
+    "Chausses Of The Demigod": 24500,
+    "Boots Of The Demigod": 26500,
 
     # Weapons
-    "Blade Of The Demigod": 900,
-    "Fey Blade": 850,
+    "Blade Of The Demigod": 32500,
+    "Fey Blade": 25000,
 
     # Shields
-    "Shield Of The Demigod": 750,
+    "Shield Of The Demigod": 29000,
 }
 
 
@@ -584,6 +584,7 @@ sellPrices = {
     "Wooden Buckler": 5,
 
     # Head (sorted by defense)
+    "Hell Helm": 1000,
     "Doomseer": 7500,
     "Gold Mask": 25000,
     "Horned Helm": 650,
@@ -592,6 +593,7 @@ sellPrices = {
     "Ceremonial Hood": 300,
     "Cloth Bandana": 50,
     "Musty Skullcap": 5,
+    "Posh Hat": 100,
 
     # Chest (sorted by defense)
     "Seal of Murmur": 13000,
@@ -678,13 +680,13 @@ sellPrices = {
 
     # Trader 3
     # Armors
-    "Iron Plate Helm": 30,
-    "Iron Plate Breastplate": 40,
-    "Iron Plate Pauldrons": 23,
-    "Iron Plate Gauntlets": 18,
-    "Iron Plate Chausses": 28,
-    "Iron Plate Boots": 15,
-    "Lordly Plated Helm": 45,
+    "Iron Plate Helm": 300,
+    "Iron Plate Breastplate": 400,
+    "Iron Plate Pauldrons": 230,
+    "Iron Plate Gauntlets": 180,
+    "Iron Plate Chausses": 280,
+    "Iron Plate Boots": 150,
+    "Lordly Plated Helm": 450,
 
     # Weapons
     "Scimitar": 90,
@@ -699,75 +701,75 @@ sellPrices = {
 
     # Trader 4
     # Armors
-    "Darksteel Plate Helm": 40,
-    "Darksteel Plate Breastplate": 60,
-    "Darksteel Plate Pauldrons": 25,
-    "Darksteel Plate Gauntlets": 20,
-    "Darksteel Plate Chausses": 30,
-    "Darksteel Plate Boots": 18,
-    "Helm Of The Fallen Hero": 75,
-    "Dragonskin Boots": 85,
+    "Darksteel Plate Helm": 400,
+    "Darksteel Plate Breastplate": 600,
+    "Darksteel Plate Pauldrons": 250,
+    "Darksteel Plate Gauntlets": 200,
+    "Darksteel Plate Chausses": 300,
+    "Darksteel Plate Boots": 180,
+    "Helm Of The Fallen Hero": 750,
+    "Dragonskin Boots": 1000,
 
     # Weapons
-    "Knings Blade": 200,
-    "Sword Of Slashing": 175,
-    "Damascus Odachi": 225,
-    "Bane": 188,
+    "Knings Blade": 2000,
+    "Sword Of Slashing": 1750,
+    "Damascus Odachi": 2250,
+    "Bane": 1880,
 
     # Shields
-    "Darksteel Shield": 100,
-    "Shield Of Deflecting": 125,
+    "Darksteel Shield": 1000,
+    "Shield Of Deflecting": 1250,
 
     # Trader 5
     # Armors
-    "Lordly Enchanted Helm": 100,
-    "Lordly Enchanted Breastplate": 150,
-    "Lordly Enchanted Pauldrons": 50,
-    "Lordly Enchanted Gauntlets": 40,
-    "Lordly Enchanted Chausses": 75,
-    "Lordly Enchanted Boots": 38,
-    "Breastplate Of The Hero": 175,
+    "Lordly Enchanted Helm": 2000,
+    "Lordly Enchanted Breastplate": 3000,
+    "Lordly Enchanted Pauldrons": 2000,
+    "Lordly Enchanted Gauntlets": 1900,
+    "Lordly Enchanted Chausses": 1800,
+    "Lordly Enchanted Boots": 1850,
+    "Breastplate Of The Hero": 3000,
 
     # Weapons
-    "Ginormous Sword": 250,
-    "Blade Of The Emperor": 300,
-    "Slayer": 275,
+    "Ginormous Sword": 2500,
+    "Blade Of The Emperor": 3000,
+    "Slayer": 2750,
 
     # Shields
-    "Ginormous Shield": 225,
-    "Shield Of The Hero": 275,
-    "Drakon Aspida": 300,
+    "Ginormous Shield": 2250,
+    "Shield Of The Hero": 2750,
+    "Drakon Aspida": 3000,
 
     # Trader 6
     # Armors
-    "Daimoniki Kefali": 175,
-    "Daimoniki Thorakisi": 250,
-    "Daimonika Cheria": 100,
-    "Daimonika Cheirofilla": 75,
-    "Daimonika Podia": 125,
-    "Daimonika Pelmata": 63,
+    "Daimoniki Kefali": 5000,
+    "Daimoniki Thorakisi": 7500,
+    "Daimonika Cheria": 5500,
+    "Daimonika Cheirofilla": 6000,
+    "Daimonika Podia": 5750,
+    "Daimonika Pelmata": 5600,
 
     # Weapons
-    "Sfageio tou Daimona": 350,
+    "Sfageio tou Daimona": 7000,
 
     # Shields
-    "Aspida tou Daimonoktonou": 250,
+    "Aspida tou Daimonoktonou": 6500,
 
     # Trader 7
     # Armors
-    "Helm Of The Demigod": 300,
-    "Chestplate Of The Demigod": 400,
-    "Pauldrons Of The Demigod": 150,
-    "Gauntlets Of The Demigod": 100,
-    "Chausses Of The Demigod": 200,
-    "Boots Of The Demigod": 75,
+    "Helm Of The Demigod": 15000,
+    "Chestplate Of The Demigod": 20000,
+    "Pauldrons Of The Demigod": 19500,
+    "Gauntlets Of The Demigod": 16500,
+    "Chausses Of The Demigod": 17800,
+    "Boots Of The Demigod": 17500,
 
     # Weapons
-    "Blade Of The Demigod": 450,
-    "Fey Blade": 425,
+    "Blade Of The Demigod": 20000,
+    "Fey Blade": 5000,
 
     # Shields
-    "Shield Of The Demigod": 375,
+    "Shield Of The Demigod": 19500,
 }
 #Merchant can sell armor and weapons, potions and even information.
 #You can also sell your gear to the merchant
@@ -915,7 +917,7 @@ enemies = {
             "Drops":{
                 "Forgotten Sword": ("Forgotten Sword", "Weapon", 23),
                 "Slimy Boots": ("Slimy Boots", "Feet", 8),
-                "Slimy Vambraces": ("limy Vambraces", "Arms", 10)
+                "Slimy Vambraces": ("Slimy Vambraces", "Arms", 10)
                 
             },
 
@@ -969,7 +971,6 @@ enemies = {
         "Drops":{
             "Rat Armor": ("Rat Armor", "Chest", 1),
             "Stinking Gloves": ("Stinking Gloves", "Hands", 2),
-            "Forgotten Blade": ("Forgotten Blade", "Weapon", 35)
         },
 
         "DefaultHealth": 65,
@@ -1105,7 +1106,7 @@ enemies = {
 
         "Drops":{
             "Duelist Rapier": ("Duelist Rapier", "Weapon", 18),
-            "Cloth Gambeson": ("Cloth Gambeson", "Chest", 5),
+            "Clothen Gambeson": ("Clothen Gambeson", "Chest", 5),
             "Posh Hat": ("Posh Hat", "Head", 3)
         },
 
@@ -1187,7 +1188,7 @@ enemies = {
         "Drops":{
             "Runed Longsword": ("Runed Longsword", "Weapon", 30),
             "Runed Shield":  ("Runed Shield", "Shield", 30),
-            "Hell Helm,": ("Hell Helm", "Head", 30),
+            "Hell Helm": ("Hell Helm", "Head", 30),
             "Hell Gauntlets": ("Hell Gauntlets", "Hands", 30),
             "Hell Plate": ("Hell Plate", "Chest", 35)
         },
@@ -1236,7 +1237,7 @@ you feel as though you were healed of all injury. You continue your quest."""
     "EventDescription": 
     
 """You find A chest full of gold and plunder! It was laying in plain sight,
-pretty strange that someone would leave it unattended. You loot it's treasure regardless."""
+pretty strange that someone would leave it unattended. You loot its treasure regardless."""
 },
 
 "RottenCorpse":{
@@ -1297,10 +1298,10 @@ continue on your journey."""
 
     "EventDescription": 
     
-"""You are travelling along the road, and notice a paticularly dense
+"""You are travelling along the road, and notice a particularly dense
 patch of forest. You cautiously move forward, not long before
 noticing the remains of what was once a caravan. You scan 
-the area for bandits or other malevolant creatures, and determine
+the area for bandits or other malevolent creatures, and determine
 that there is nothing lingering or waiting in ambush. You find various
 things that unwise brigands left behind."""
 },
@@ -1320,10 +1321,10 @@ things that unwise brigands left behind."""
     "EventDescription": 
     
 """A disgusting smell enters your nostrils, death.
-you cautiously walk forward, and trough a clearing in
+you cautiously walk forward, and through a clearing in
 the forest, you spot what looks like the remains of a small
 skirmish. You look for movement, but all that remain are dead men.
-You scour the battlefeild, and you find a decent knight's Shield!"""
+You scour the battlefield, and you find a decent knight's Shield!"""
 },
     
 "CharredRemains":{
@@ -1381,8 +1382,8 @@ He gives you advise of the road ahead."""
 """In the distance you spot a red glow. You wearily approach it,
 and notice it's coming from inside of a shallow cave. You cautiously
 move inside and see a red glowing symbol on the ground. The mark of
-silence, an evil and malevolant symbol. The symbol flashes red, then
-dissapears, but you feel as though you have become stronger."""
+silence, an evil and malevolent symbol. The symbol flashes red, then
+disappears, but you feel as though you have become stronger."""
 },
        
 "StrangeGlowing":{
@@ -1425,7 +1426,7 @@ and go back to your camp, where you sleep the night away."""
     
 """You notice a man sitting in the road, talking to himself.
 As you approach, his ramblings become more clear, it is a man
-who lost his mind. He speaks of a sybol, or seal as he called it,
+who lost his mind. He speaks of a symbol, or seal as he called it,
 and a calamity that would soon take place. He told you to beware 
 of the Phoenix. You distance yourself from the man and continue your travels."""
 },
@@ -1447,7 +1448,7 @@ of the Phoenix. You distance yourself from the man and continue your travels."""
 """All your hairs stand on end, and your heart stops for a moment. 
 Fear is all you feel, and you cannot move. You sense a great evil
 nearby, one that terrifies you. But soon enough, the feeling vanishes,
-and you wearily contiune walking along the road."""
+and you wearily continue walking along the road."""
 },
 
 "SwordInStone":{
@@ -1465,7 +1466,7 @@ and you wearily contiune walking along the road."""
     "EventDescription": 
     
 """A ray of light shines upon a large boulder. You make your way towards
-it. You walk closer then you notice it, a beautiful sword, lodged into the rock.
+it. You walk closer than you notice it, a beautiful sword, lodged into the rock.
 You take both hands and grab the handle of the sword, and pull as hard as you can.
 The sword doesn't budge, but eventually, it gets looser, and soon, with one final
 pull, out it popped! You inspect it, and it is a fine blade indeed. Engraved in
@@ -1487,7 +1488,7 @@ symbols you have never seen, this could've been the sword of a hero!"""
     "EventDescription": 
     
 """As you are travelling along the road, you come across ruined castle.
-You search it's halls and dungeons, and take what you can find. Eventually,
+You search its halls and dungeons, and take what you can find. Eventually,
 you happen upon the armory, and find various old weapons and armor, but
 only one weapon looked like it was worth taking."""
 },
@@ -1513,7 +1514,7 @@ and save the world. Power surges through your veins, you feel like you can
 do anything. Are the stories true?"""
 },
 
-"RejuvinatingPool":{
+"RejuvenatingPool":{
     "Stats":{
         "Exp": 300,
         "Gold": 0,
@@ -1569,9 +1570,9 @@ Eventually you pick up and begin heading forward, to continue your journey."""
 
     "EventDescription": 
     
-"""Along the path, you notice a backpack. You open itis look at whats inside.
-From it's contents you surmise that this is the backpack of an adventurer, 
-likely close by. Nonetheless, you take what you wanted and contiune your trek..."""
+"""Along the path, you notice a backpack. You open it and look at what's inside.
+From its contents you surmise that this is the backpack of an adventurer, 
+likely close by. Nonetheless, you take what you wanted and continue your trek..."""
 },
 
 "PotionTester":{
@@ -1594,7 +1595,7 @@ and alchemical tools line the inside of his coat.
 He asks if you can try one of his potions, as he claims
 he is a famous alchemist from the empire. You indulge him,
 and feel as though the potion not only healed you, but made you
-stronger and faster! You tell him and he is suprised to hear it.
+stronger and faster! You tell him and he is surprised to hear it.
 Nonetheless, you and him part ways, but the warnings he gave you
 of the road ahead make you a little more cautious."""
 },
@@ -1613,11 +1614,11 @@ of the road ahead make you a little more cautious."""
 
     "EventDescription": 
     
-"""Ahead of you, you notice a oddly shaped bouler, Almost unnatural. 
+"""Ahead of you, you notice a oddly shaped boulder, Almost unnatural. 
 You move to investigate it, and Upon further inspection, the boudler 
 doesn't look like a boulder at all! You tap it with the tip of your blade,
-and low and behold, a small creature crawls out from under it. He repremands
-you for disturbing his sleep, and throws a bag of gold on the ground and crawls
+and low and behold, a small creature crawls out from under it. He reprimands
+you for disturbing his sleep, and throws a bag of gold on the ground, then crawls
 back into what now you believe to be his home. You take the gold and continue on your journey."""
 },
 
@@ -1636,7 +1637,7 @@ back into what now you believe to be his home. You take the gold and continue on
     "EventDescription": 
     
 """The path splits into 2, so you decide to take the left path.
-You hope you made the right desicion..."""
+You hope you made the right decision..."""
 },
   
 "OldHelmet":{
@@ -1694,14 +1695,14 @@ the vessel of something ancient, something powerful."""
         "Agility": 0,
         },
 
-    "Drops": {"Old shield": ("Old shield", "Shield", 8)},
+    "Drops": {"Old Shield": ("Old Shield", "Shield", 8)},
     "HealthRestore": False,
 
     "EventDescription": 
     
 """You notice bones scattered across the ground. Upon farthur
 inspection, you realise these are human remains, ancient and
-decayed. But, on the ground you see an old shield!
+decayed. But, on the ground you see an Old Shield!
 Finders keepers!"""
 },
 
@@ -1782,7 +1783,7 @@ After many hours, you continue your journey."""
 You spot a shaded meadow, with trees surrounding it. You lay against a tree and
 look through your baggage. Many hours pass and you pick yourself up and continue,
 but as you get up, you notice an ancient Plate Cuirass, lying in the grass
-beside you. Suprised that you didn't see it before, you inspect it. Though it is old,
+beside you. Surprised that you didn't see it before, you inspect it. Though it is old,
 it is full plate, and will provide great protection from the dangers to come."""
 },
 
@@ -1800,10 +1801,10 @@ it is full plate, and will provide great protection from the dangers to come."""
 
     "EventDescription": 
     
-"""A man taps you on your shoulder, a dwarf assasin from the far reaches of the world.
+"""A man taps you on your shoulder, a dwarf assassin from the far reaches of the world.
 With a relieved look on his face, he asks you to join his group around their bonfire and lodgings.
 They share with you their stories of adventure and pass around rum, forest forage and nuts.
-After a long Friendly conversation with the five adventurers, you return to your journey."""
+After a long friendly conversation with the five adventurers, you return to your journey."""
 },
 
 "SmallCave":{
@@ -1891,7 +1892,6 @@ def gameLoop():
             #shopkeeper function here
 
         elif questStep == trader2:
-            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
             tradeMenu()
             #shopkeeper function here
 
@@ -1900,7 +1900,6 @@ def gameLoop():
             combat("Goblin Lord")
 
         elif questStep == trader3:
-            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
             tradeMenu()
 
         elif questStep == darkSorcererEncounter:
@@ -1908,7 +1907,6 @@ def gameLoop():
             combat("Dark Sorcerer")
 
         elif questStep == trader4:
-            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
             tradeMenu()
 
         elif questStep == stoneGolemEncounter: 
@@ -1916,7 +1914,6 @@ def gameLoop():
             combat("Stone Golem")
 
         elif questStep == trader5:
-            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
             tradeMenu()
 
         elif questStep == dragonEncounter:
@@ -2049,34 +2046,30 @@ def combat(enemySelected):
         enemyProperties = miniBosses[enemySelected]
         questStep += 1
         print("")
-        print("You encountered a", enemySelected)
+        print("You encountered the", enemySelected)
         print("")
 
     elif enemySelected in ["Apollyon, Avatar Of Pride", "Demon Lord"]:
         enemyProperties = finalBosses[enemySelected]
         questStep += 1
         print("")
-        print("You encountered a", enemySelected)
+        print("You encountered ", enemySelected)
         print("")
-
 
     else:
         enemyProperties = enemies[enemySelected]
 
-    shield = playerData["EquippedItems"].get("Shield")
-    stunChance = shield[2] * 2.5 if shield else 1
-    runChance = playerData["Stats"]["Agility"] * 3
-    runChance -= enemyProperties["Stats"]["Agility"] 
+    shield = playerData["EquippedItems"]["Shield"]
+    stunChance = shield[2] * 2 if shield else 1
+    runChance = (playerData["Stats"]["Agility"] * 1.2) - enemyProperties["Stats"]["Agility"] 
 
-    #Max stun chance is CURRENTLY 65
     if stunChance >= maxStunChance:
         stunChance = maxStunChance
 
     while playerData["Stats"]["Health"] >= 0:
-
-
         playerAtkChoice = str.upper(input("Attack(A) | Defend(D) | Run(R) | Stats(S) | Enemy Stats(E) | Help(H): "))
 
+        #MARK: ATTACK
         if playerAtkChoice == "A":
 
             if playerData["EquippedItems"]["Weapon"] == None:
@@ -2109,6 +2102,8 @@ def combat(enemySelected):
                 print("You did:", playerDamage, "damage to the enemy, but the enemy did", enemyDamage, "damage to you!") # enemy hit player
                 print("Your new health is:", playerData["Stats"]["Health"], ", the enemies health is:", enemyProperties["Stats"]["Health"])
                 print("")
+
+        #MARK: DEFEND
         elif playerAtkChoice == "D": 
             stun = random.randint(0, 100)
             
@@ -2135,7 +2130,7 @@ def combat(enemySelected):
                     print("the enemy did", enemyDamage, "damage to you!")
                     print("Your new health is:", playerData["Stats"]["Health"], "the enemies health is:", enemyProperties["Stats"]["Health"])
                     print("")
-        
+        #MARK: RUN
         elif playerAtkChoice == "R":
             run = random.randint(0, 100)
 
@@ -2150,26 +2145,32 @@ def combat(enemySelected):
                 gameLoop()
 
             else:
+                enemyDamage = enemyProperties["Stats"]["Attack"] - playerData["Stats"]["Defence"]
+
+                if enemyDamage <= 1:
+                    enemyDamage = 1
+                   
                 print("")
                 print("You failed to run from the enemy!")
-                enemyDamage = enemyProperties["Stats"]["Attack"] - playerData["Stats"]["Defence"] 
                 playerData["Stats"]["Health"] -= enemyDamage
-                
                 print("")
                 print("The enemy did", enemyDamage, "damage to you!") # enemy hit player
                 print("Your new health is:", playerData["Stats"]["Health"], ", the enemies health is:", enemyProperties["Stats"]["Health"])
                 print("")
 
+        #Shows the player their stats
         elif playerAtkChoice == "S":
             print("")
             print(playerData["Stats"])
             print("")
 
+        #Shows the player the enemies properties
         elif playerAtkChoice == "E":
             print("")
             print(enemySelected, "Health:", enemyProperties["Stats"]["Health"], "|", "Attack:", enemyProperties["Stats"]["Attack"], "|", "Agility:", enemyProperties["Stats"]["Agility"] )
             print("")
 
+        #Prompts the player with a help interface
         elif playerAtkChoice == "H":
             while True:
                 helpAttackInput = str.upper(input("Help with: Attack(A) | Defend(D) | Run(R) | Stats(S) | Back(B): "))
@@ -2204,6 +2205,7 @@ def combat(enemySelected):
             print("Invalid input")
             print("")
 
+        #MARK: ENEMY DEATH
         #Death conditions, what happens when a regular enemy vs miniboss vs main boss dies
         if enemyProperties["Stats"]["Health"] <= 0:
 
@@ -2222,7 +2224,6 @@ def combat(enemySelected):
             elif enemySelected == "Demon Lord":
                 print("The demon lord wretches on it's own foul blood, \"You will see the grave mistake you've made, just kill me and let this world rot.\" \n You plunge your sword into his heart, and to black mist he faded.")
 
-
             elif enemySelected == "Apollyon, Avatar Of Pride": 
                 print("'You killed the final boss'")
 
@@ -2240,9 +2241,9 @@ def combat(enemySelected):
                 print("")
 
             dropRandNum = random.randint(0, 100)
-
             enemyProperties["Stats"]["Health"] = enemyProperties["DefaultHealth"]
 
+            #MARK: DROPS
             if dropRandNum <= enemyProperties["DropChance"]: 
                 dropSelected = random.choice(list(enemyProperties["Drops"].keys()))
                 dropProperties = enemyProperties["Drops"][dropSelected]
@@ -2284,8 +2285,6 @@ def levelUp():
         statAllocation()
         
     if playerData["Stats"]["Exp"] <= levelData[str(playerData["Stats"]["Level"])]:
-        
-        print("Player did not level up")
         gameLoop()
 
 #MARK: STAT ALLOCATION
@@ -2307,7 +2306,6 @@ def statAllocation():
             print("You increased your Attack by", levelUpStats)
             print("")
             plrAttributePoints -= levelUpStats
-            
             
         elif statAllocationInput == "DEF":
             playerData["Stats"]["Defence"] += levelUpStats
@@ -2331,41 +2329,43 @@ def statAllocation():
 # MARK: REST
 def rest():
     global questStep
+    enemySelected = random.choice(list(enemies.keys()))
     ambushRandomNum = random.randint(0, 100)
-    ambushChance =  30 - (playerData["Stats"]["Agility"] * 0.20) 
-    print("Ambush chance: ", ambushChance)
+    ambushChance =  defaultAmbushChance - (playerData["Stats"]["Agility"] * 0.20) 
 
     if playerData["Stats"]["Health"] == 100:
+            print("")
             print("You are already max health")
+            print("")
             gameLoop()
 
-    if ambushChance < 5:
-        ambushChance = 5
-
+    #Ambush chance will be at minimum 10% chance
+    if ambushChance < 10:
+        ambushChance = 10
 
     if ambushRandomNum <= ambushChance:
         questStep += 1
         print("")
         print("You were ambushed!")
-        enemySelected = random.choice(list(enemies.keys()))
         print("")
         print("You encountered a", enemySelected)
         print("")
         combat(enemySelected)
 
     elif playerData["Stats"]["Health"] != 100:
-        playerData["Stats"]["Health"] = playerData["Stats"]["Health"] + 10 + playerData["Stats"]["Agility"]
+        playerData["Stats"]["Health"] = playerData["Stats"]["Health"] + restHealthGain + (playerData["Stats"]["Agility"] * ambushHealthAgilityPercent)
 
         if playerData["Stats"]["Health"] >= 101:
             playerData["Stats"]["Health"] = 100
             print("You rested, your health is now: ", playerData["Stats"]["Health"])
-            moveForward()
             questStep += 1 
+            gameLoop()
 
         else:
             print("You rested, your health is now: ", playerData["Stats"]["Health"])
-            moveForward()
             questStep += 1 
+            combat(enemySelected)
+            
 
 # MARK: EQUIPMENT MENU
 def equipMenu():
@@ -2446,8 +2446,8 @@ def equipItemInput(inventoryItemName, inventoryItemStat, inventoryItemType):
                 print("")
 
 # MARK: EQUIP MAIN
-def equipItemMain(equipItemInput):
-    capitalEquipItemInput = equipItemInput.capitalize()
+def equipItemMain(equipItemInputParam):
+    capitalEquipItemInput = equipItemInputParam.capitalize()
 
     if playerData["Inventory"][capitalEquipItemInput] == None:
         
@@ -2637,41 +2637,13 @@ def discardItemMain(discardItemInputParam):
                 print("Invalid input")
                 print("")
 
-#MARK: TRADE HELP
-def tradeHelp():
-    while True:
-        tradeHelpInput = str.upper(input("Help with: Trade(T) | Sell(S) | Unequip(U) | Back(B): "))
-
-        if tradeHelpInput == "T":
-            print("")
-            print("Trading allows you to buy items. The trader's goods will get better")
-            print("the farther you make it into your journey.")
-            print("")
-
-        elif tradeHelpInput == "S":
-            print("")
-            print("Selling allows you to sell your items to the trader to get gold.")
-            print("")
-
-        elif tradeHelpInput == "U":
-            print("")
-            print("Allows you to unequip items so you can sell them.")
-            print("")
-
-        elif tradeHelpInput == "B":
-            tradeMenu()
-            break
-
-        else:
-            print("Invalid Input")
-
 #MARK: TRADE INPUT 
 def tradeMenu():
     global traderMenu, questStep
     traderMenu = True
 
     while True:
-        tradeMenuInput = str.upper(input("Trade(T) | Sell(S) | Unequip(U) | Help(H) | Back(B): "))
+        tradeMenuInput = str.upper(input("Trade(T) | Sell(S) | Unequip(U) | Dialogue (D) | Help(H) | Back(B): "))
     
         if tradeMenuInput == "T":
             print("")
@@ -2685,6 +2657,9 @@ def tradeMenu():
         elif tradeMenuInput == "U":
             unequipItemInput()
             break
+
+        elif tradeMenuInput == "D":
+            tradeDialogue()
 
         elif tradeMenuInput == "H":
             print("")
@@ -2701,6 +2676,84 @@ def tradeMenu():
             print("")
             print("Invalid Input")
             print("")
+
+#MARK: TRADE DIALOGUE
+def tradeDialogue():
+    if questStep == trader1:
+        print("")
+        print("Greetings traveller! I have seen many adventurers and travellers")
+        print("like yourself walking along this road. I would like to introduce")
+        print("myself, I am George, a humble mercant. I am always on the move so")
+        print("you are lucky to have found me! I had just brought in a shipment of") 
+        print("fresh wares, but sadly, a large party of adventurers bought all of")
+        print("my high quality stock. Nonetheless, I still have some things left over.")
+        print("take look, wont you?")
+        print("")
+
+    elif questStep == trader2:
+        print("")
+        print("Why hello again, traveller! I have partly restocked my goods, so")
+        print("there should be something decent within my stock. Traveller, I have")
+        print("been seeing more goblins than is normal within these forests... I would")
+        print("head back if I were you, something strange is happening on the road ahead...")
+        print("")
+
+    elif questStep == trader3:
+        print("")
+        print("Ah, traveller! Goblin slayer! The surrounding townsfolk have been informed")
+        print("of your heroic victory! The Goblin Lord has terrorized these woods for many")
+        print("years now, and he has finally been defeated! Oh, and good news, I had a ")
+        print("shipment of high quality goods roll in from the South Isles. I even got my")
+        print("hands on a magic sword, which would be befitting of a hero like you! Though")
+        print("traveller, I have been feeling an ominous presence within these woods for days")
+        print("now, I hope it's nothing...")
+        print("")
+
+    elif questStep == trader4:
+        print("")
+        print("Traveller! You seem to have a different air about you... The dark presence")
+        print("once felt within these forests has vanished, did you have anything to do")
+        print("with it? Nonetheless, I have gathered some truly stunning wares. I was")
+        print("actually on my way to the Theden Kingdom, to supply the Black Knights with")
+        print("new arms and armor, but it wouldn't hurt if you could take some off me, I ")
+        print("have plenty extra. Within these wares, though, is a sword that could slash")
+        print("through even the largest boulders with ease...")
+        print("")
+
+    elif questStep == trader5:
+        print("")
+        print("Once again we meet, traveller! You are quite far from where you started!")
+        print("Not many adventurers have made it as far as you... I heard you defeated the")
+        print("Stone Golem, a truly heroic feat. But there is something you must know traveller,")
+        print("ahead lies the den of a formiddable dragon, a thing of legends. If you truly")
+        print("wish to move forward, then I have some legendary wares to give you. A set of ")
+        print("enchanted armor, relic weapons, and a shield of one who was once a great dragon")
+        print("slayer of the Theden Kingdom...")
+        print("")
+
+    elif questStep == trader6:
+       print("")
+       print("So you have done it, traveller- no, Hero. You have done what few men have have ")
+       print("dreampt of. You have slain the great dragon! You may be the strongest adventurer ")
+       print("to have ever lived. The people of the Theden Kingdom urge for your return, as they ")
+       print("wish to witness the one who defeated the dragon that has threatened the Kingdom ")
+       print("for so long... But I, as may you, sense a great evil ahead, a putrid being of pure ")
+       print("evil. Hero, you must move forward, destroy what lies ahead, for I fear the entire ")
+       print("world may be at risk if this evil is not thwarted... Hero, I have not just come ")
+       print("all this way to speak empty words, I have brought the greatest wares in the known world ")
+       print("to aid you on this task, arms and armor of demonic make...")
+       print("")
+
+# trader7 = 85
+# ApollyonEncounter = 100
+    elif questStep == trader7:
+        print("")
+        print("You have slain the Demon Lord, you truly are the one from legend... I have ")
+        print("travelled to the Realm of Heaven, and did trade with the gods, I have acquired ")
+        print("the greatest arms and armor in the known world. I do not know what threat lies ahead ")
+        print("Hero, but you should take a loot at my wares, and I hope there is something among them ")
+        print("worthy of being used by you.")
+        print("")
 
 #MARK: TRADE MAIN
 def tradeMain():
@@ -2818,12 +2871,18 @@ def sellInput():
             print("Invalid Input")    
             print("")
 
-#MARK: SELL
+#MARK: SELL MAIN
 def sellMain(sellInput):
     print("sell input",sellInput)
     sellInputCapitalized = sellInput.title()
 
     soldItemMain = playerData["Inventory"][sellInputCapitalized]
+
+    if soldItemMain == None:
+        print("")
+        print("No item in that slot!")
+        return
+
     soldItemName = soldItemMain[0]
 
     playerData["Stats"]["Gold"] += sellPrices[soldItemName]
@@ -2925,6 +2984,34 @@ def mainHelp():
             print("")
             print("Invalid input")
             print("")
+
+#MARK: TRADE HELP
+def tradeHelp():
+    while True:
+        tradeHelpInput = str.upper(input("Help with: Trade(T) | Sell(S) | Unequip(U) | Back(B): "))
+
+        if tradeHelpInput == "T":
+            print("")
+            print("Trading allows you to buy items. The trader's goods will get better")
+            print("the farther you make it into your journey.")
+            print("")
+
+        elif tradeHelpInput == "S":
+            print("")
+            print("Selling allows you to sell your items to the trader to get gold.")
+            print("")
+
+        elif tradeHelpInput == "U":
+            print("")
+            print("Allows you to unequip items so you can sell them.")
+            print("")
+
+        elif tradeHelpInput == "B":
+            tradeMenu()
+            break
+
+        else:
+            print("Invalid Input")
 
 # MARK: EQUIP MENU HELP
 def equipMenuHelp():

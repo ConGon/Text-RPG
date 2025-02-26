@@ -1,3 +1,5 @@
+TOTAL ITEMS: 168
+
 Weapon
 Forgotten Sword: ("Forgotten Sword", "Weapon", 23)
 Rusty Dagger: ("Rusty Dagger", "Weapon", 5)
@@ -103,3 +105,100 @@ Old Stick: ("Old Stick", "Weapon", 2)
 Ancient Plate Cuirass: ("Ancient Plate Cuirass", "Chest", 20)
 Expensive Trinket: ("Expensive Trinket", "Weapon", 1)
 Green Gemstone: ("Green Gemstone", "Weapon", 1)
+
+Trader items
+Weapons
+"Straight Sword": ("Straight Sword", "Weapon", 12)
+"Highland Sword": ("Highland Sword", "Weapon", 15)
+"Soldiers Spear": ("Soldiers Spear", "Weapon", 16)
+"Zweihander": ("Zweihander", "Weapon", 20)
+"Scimitar": ("Scimitar", "Weapon", 25)
+"Steel Pernach": ("Steel Pernach", "Weapon", 28)
+"Knights Sword": ("Knights Sword", "Weapon", 30)
+"Sword Of Slashing": ("Sword Of Slashing", "Weapon", 40)
+"Bane": ("Bane", "Weapon", 45)
+"Knings Blade": ("Knings Blade", "Weapon", 50)
+"Damascus Odachi": ("Damascus Odachi", "Weapon", 60)
+"Blessed Sword": ("Blessed Sword", "Weapon", 40)
+"Ginormous Sword": ("Ginormous Sword", "Weapon", 90)
+"Slayer": ("Slayer", "Weapon", 85)
+"Blade Of The Emperor": ("Blade Of The Emperor", "Weapon", 100)
+"Sfageio tou Daimona": ("Sfageio tou Daimona", "Weapon", 120)
+"Blade Of The Demigod": ("Blade Of The Demigod", "Weapon", 160)
+"Fey Blade": ("Fey Blade", "Weapon", 140)
+
+Shields
+"Reinforced Wooden Shield": ("Reinforced Wooden Shield", "Shield", 6)
+"Ancient Iron Shield": ("Ancient Iron Shield", "Shield", 10)
+"Steel Buckler": ("Steel Buckler", "Shield", 12)
+"Viking Shield": ("Viking Shield", "Shield", 15)
+"Knights Shield": ("Knights Shield", "Shield", 20)
+"Tower Shield": ("Tower Shield", "Shield", 25)
+"Darksteel Shield": ("Darksteel Shield", "Shield", 30)
+"Shield Of Deflecting": ("Shield Of Deflecting", "Shield", 35)
+"Decorated Shield": ("Decorated Shield", "Shield", 30)
+"Ginormous Shield": ("Ginormous Shield", "Shield", 70)
+"Shield Of The Hero": ("Shield Of The Hero", "Shield", 90)
+"Drakon Aspida": ("Drakon Aspida", "Shield", 100)
+"Aspida tou Daimonoktonou": ("Aspida tou Daimonoktonou", "Shield", 80)
+"Shield Of The Demigod": ("Shield Of The Demigod", "Shield", 100)
+
+Head
+"Clothen Cap": ("Clothen Cap", "Head", 7)
+"Ruined Steel Helm": ("Ruined Steel Helm", "Head", 10)
+"Cheap Chainmail Cap": ("Cheap Chainmail Cap", "Head", 10)
+"Iron Plate Helm": ("Iron Plate Helm", "Head", 25)
+"Lordly Plated Helm": ("Lordly Plated Helm", "Head", 35)
+"Darksteel Plate Helm": ("Darksteel Plate Helm", "Head", 30)
+"Helm Of The Fallen Hero": ("Helm Of The Fallen Hero", "Head", 40)
+"Lordly Enchanted Helm": ("Lordly Enchanted Helm", "Head", 50)
+"Daimoniki Kefali": ("Daimoniki Kefali", "Head", 70)
+"Helm Of The Demigod": ("Helm Of The Demigod", "Head", 120)
+
+Chest
+"Clothen Gambeson": ("Clothen Gambeson", "Chest", 15)
+"Ruined Hauberk": ("Ruined Hauberk", "Chest", 25)
+"Cheap Chainmail Shirt": ("Cheap Chainmail Shirt", "Chest", 20)
+"Iron Plate Breastplate": ("Iron Plate Breastplate", "Chest", 40)
+"Darksteel Plate Breastplate": ("Darksteel Plate Breastplate", "Chest", 50)
+"Lordly Enchanted Breastplate": ("Lordly Enchanted Breastplate", "Chest", 75)
+"Breastplate Of The Hero": ("Breastplate Of The Hero", "Chest", 80)
+"Daimoniki Thorakisi": ("Daimoniki Thorakisi", "Chest", 100)
+"Chestplate Of The Demigod": ("Chestplate Of The Demigod", "Chest", 150)
+
+Arms
+"Clothen Bracers": ("Clothen Bracers", "Arms", 5)
+"Cheap Chainmail Vambraces": ("Cheap Chainmail Vambraces", "Arms", 7)
+"Iron Plate Pauldrons": ("Iron Plate Pauldrons", "Arms", 15)
+"Darksteel Plate Pauldrons": ("Darksteel Plate Pauldrons", "Arms", 20)
+"Lordly Enchanted Pauldrons": ("Lordly Enchanted Pauldrons", "Arms", 30)
+"Daimonika Cheria": ("Daimonika Cheria", "Arms", 40)
+"Pauldrons Of The Demigod": ("Pauldrons Of The Demigod", "Arms", 60)
+
+Hands
+"Clothen Gloves": ("Clothen Gloves", "Hands", 4)
+"Cheap Chainmail Mittens": ("Cheap Chainmail Mittens", "Hands", 6)
+"Iron Plate Gauntlets": ("Iron Plate Gauntlets", "Hands", 10)
+"Darksteel Plate Gauntlets": ("Darksteel Plate Gauntlets", "Hands", 15)
+"Lordly Enchanted Gauntlets": ("Lordly Enchanted Gauntlets", "Hands", 25)
+"Daimonika Cheirofilla": ("Daimonika Cheirofilla", "Hands", 30)
+"Gauntlets Of The Demigod": ("Gauntlets Of The Demigod", "Hands", 40)
+
+Legs
+"Clothen Leggings": ("Clothen Leggings", "Legs", 10)
+"Cheap Chainmail Leggings": ("Cheap Chainmail Leggings", "Legs", 13)
+"Iron Plate Chausses": ("Iron Plate Chausses", "Legs", 20)
+"Darksteel Plate Chausses": ("Darksteel Plate Chausses", "Legs", 25)
+"Lordly Enchanted Chausses": ("Lordly Enchanted Chausses", "Legs", 40)
+"Daimonika Podia": ("Daimonika Podia", "Legs", 50)
+"Chausses Of The Demigod": ("Chausses Of The Demigod", "Legs", 75)
+
+Feet
+"Clothen Boots": ("Clothen Boots", "Feet", 3)
+"Cheap Chainmail Socks": ("Cheap Chainmail Socks", "Feet", 5)
+"Iron Plate Boots": ("Iron Plate Boots", "Feet", 10)
+"Darksteel Plate Boots": ("Darksteel Plate Boots", "Feet", 12)
+"Lordly Enchanted Boots": ("Lordly Enchanted Boots", "Feet", 20)
+"Dragonskin Boots": ("Dragonskin Boots", "Feet", 35)
+"Daimonika Pelmata": ("Daimonika Pelmata", "Feet", 25)
+"Boots Of The Demigod": ("Boots Of The Demigod", "Feet", 35)
