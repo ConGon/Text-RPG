@@ -1851,11 +1851,7 @@ defaultEnemysData = copy.deepcopy(enemies)
 
 #MARK: QUEST BEGIN
 def questBegin():
-<<<<<<< HEAD:TrialsOfTheWanderer.py
     print("Welcome to: Trials Of The Wanderer!")
-=======
-    print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.\n")
->>>>>>> bd6817f0fa0d7b559edaa761702666656b69ffe2:Text-Based-RPG.py
     playerName = str(input("Please enter your name: "))
     playerData["PlayerName"] = playerName
     print("")
@@ -2525,7 +2521,6 @@ def equipMenu():
 
 # MARK: EQUIP INPUT
 def equipItemInput(inventoryItemName, inventoryItemStat, inventoryItemType):
-    print("INVENTORY ITEM TYPE:", inventoryItemType)
     print("Your Inventory:", playerData["Inventory"])
     print("")
     print("Your Equipped Items:", playerData["EquippedItems"])
