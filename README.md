@@ -23,6 +23,7 @@ The letters or characters wrapped in brackets () are the valid inputs, and their
 In order to finalize an input, you type the character, followed by the enter key. So if I wanted to move forward, I would 
 hit the W key, followed by the enter key. There is also provided help functions every time an input prompt appears.
 
+
 Enemies and Random Events:
 In Trials Of The Wanderer, there are two main things that can happen when you "Move Forward": 1, you encounter a random
 enemy, 2, you encounter a random event. When you encounter an enemy, you then must defeat the enemy, or run away. When 
@@ -32,8 +33,46 @@ you permanent stat increases.
 
 Combat:
 
+Attacking:
+Combat is simple, it involves Attacking, Defending, and Running. Trials Of The Wanderer runs on a "Simultanious turns"
+system, where when you attack the enemy, the enemy also attacks you. When you attack, the enemy takes damage for at much
+Attack stat you have. So if you have 50 Attack stat, you will do 50 damage to the enemy. Below is an enemy encounter:
+
+You encountered a Devil Cultist
+
+Attack(A) | Defend(D) | Run(R) | Stats(S) | Enemy Stats(E) | Help(H):
+
+Inputting A then hitting enter will attack the enemy, but the enemy will also attack you. When an enemy attacks you, 
+the damage they do will be mitigated by how much armor you have, so if the enemy does 25 damage, and you have 10 armor,
+the enemy will only do 15 damage. 
+
+
+Defending:
+When you defend, it takes the amount of armor your shield has, multiplies it by 2,
+which becomes your chance to stun the enemy. So if your sheild has 20 armor, then your chance to stun an enemy when
+you block is 40%, up to a maximum of 65. 
+
+
+Running:
+When you run, it takes your agility and multiplies it by 1.2, then subtracts
+the enemies agility. So the formula looks like this: RunChance = (agility * 1.2) - enemyAgility. So if your agility
+is 10, and the enemies agility is 5, then your run chance is 7%. When you run, it ends the encounter.
+
 
 Levelling:
+Levelling is straightforward, there are exp requirements for each level, and when you meet the requirement, you level up.
+When you level up, you are granted 5 stat-points, which you can allocated to either: Attack, Defence or Agility. Each time
+you allocate stat-points, you allocate them in 5-point increments. Below is an example of a character levelling up 3 times
+in a row after being granted exp:
+
+You levelled up
+You levelled up
+You levelled up
+You have: 15 Attribute points to spend
+
+Allocate 5 stats to: Attack(ATK) | Defence(DEF) | Agility(AGI):
+
+If I wanted to allocate 5 points to attack, i would input: ATK and hit enter.
 
 
 Stats:
@@ -43,6 +82,9 @@ defence is 1 damage reduced.
 
 
 Items:
+Each item has 3 properties: Name of the item, Type of the item, damage or defence of the item. 
+For this item: ("Bruised Iron Leggings", "Legs", 5), Bruised Iron Leggings is the name, Legs is the type of item
+and 5 is the defence of the item.
 
 
 Equipment:
