@@ -4,7 +4,7 @@ import math, random, copy
 levelUpStats = 5
 
 defaultHealth = 100
-questStep = 25
+questStep = 0
 
 restHealthGain = 10
 ambushHealthAgilityPercent = 0.25
@@ -42,8 +42,8 @@ ApollyonEncounter = 100
 playerData = {
     "Stats":{
         "Health": 100,
-        "Attack": 1,
-        "Defence": 1, 
+        "Attack": 1000,
+        "Defence": 1000, 
         "Agility": 5,
         "Level": 0,
         "Exp": 0,
@@ -78,7 +78,7 @@ playerData = {
 
     "Inventory":{
         
-        "Slot0": ("Old Shield", "Shield", 8),
+        "Slot0": None,
         "Slot1": None,
         "Slot2": None,
         "Slot3": None,
@@ -112,19 +112,6 @@ playerData = {
         "Feet": None
     }
 }
-
-#HIGHSCORE: YOU MANAGED TO GET 20 QUEST STEPS
-
-#IDEA FOR SHOP
-#Create a table for all the items, and their price
-#When you want to sell an item, loop through the items
-#in the player's table and check which items they have.
-#Then, display the prices of the items they posess.
-
-#IDEA FOR ARMOR
-#Divide the player's armor value into half
-#Take one half of it, and generate a random number between 0 and half of players armor.
-#And thats how much armor the player has that turn.
 
 levelData = {
     "0": 100,
@@ -594,6 +581,7 @@ sellPrices = {
     "Cloth Bandana": 50,
     "Musty Skullcap": 5,
     "Posh Hat": 100,
+    "Battered Iron Helm": 200,
 
     # Chest (sorted by defense)
     "Seal of Murmur": 13000,
@@ -779,7 +767,7 @@ finalBosses = {
     "Demon Lord": {
         "Stats":{
             "Health": 5000,
-            "Attack": 45,
+            "Attack": 185,
             "Agility": 95,
             "ExpValue": 75000
 
@@ -822,7 +810,7 @@ miniBosses = {
     "Goblin Lord": {
         "Stats":{
             "Health": 200,
-            "Attack": 30,
+            "Attack": 50,
             "Agility": 75,
             "ExpValue": 3500
 
@@ -842,7 +830,7 @@ miniBosses = {
     "Dark Sorcerer": {
         "Stats":{
             "Health": 350,
-            "Attack": 45,
+            "Attack": 75,
             "Agility": 60,
             "ExpValue": 7500
 
@@ -862,7 +850,7 @@ miniBosses = {
     "Stone Golem": {
         "Stats":{
             "Health": 1000,
-            "Attack": 25,
+            "Attack": 65,
             "Agility": 30,
             "ExpValue": 17500
 
@@ -883,7 +871,7 @@ miniBosses = {
     "Dragon": {
         "Stats":{
             "Health": 750,
-            "Attack": 75,
+            "Attack": 120,
             "Agility": 75,
             "ExpValue": 45000
 
@@ -1863,7 +1851,6 @@ defaultEnemysData = copy.deepcopy(enemies)
 
 #MARK: QUEST BEGIN
 def questBegin():
-    print("")
     print("Welcome to TERRA, the home of the gods.\nThis is a simple text based rpg.\n")
     playerName = str(input("Please enter your name: "))
     playerData["PlayerName"] = playerName
@@ -1872,79 +1859,204 @@ def questBegin():
     print("")
     gameLoop()
 
+#MARK: QUEST END
+def questEnd():
+    print("You will take my place as Demiurge, and act as the great veil.")
+    print("You are the fifth of us, and you will understand with time...")
+    print("It was the mistake of a god that we must exist, so please, ")
+    print("take my place, you are the last hope that Terra has...\"")
+
+
+    while True:
+        print("")
+        playerChoice = str.upper(input("Become the Demiurge: Yes(Y), No(N): "))
+
+        if playerChoice == "Y":
+            print("")
+            print("You agree to become the next Demiurge, the power of Apollyon ")
+            print("flows through your very being. You see everything, the mistake of ")
+            print("the god, Asclepius. On Mount Olympus, his hubris lead him to ")
+            print("challenge the gods. He and his immortals stormed the golden gates, ")
+            print("and Asclepius stripped Zeus of his immortality. Through his necromancy, ")
+            print("Asclepius peered into Zeus's soul, and knew that he had doomed the world.")
+            print("In a final effort to save Terra from the greater beings, he became a ")
+            print("barrier. He was the first Demiurge, of which were five. You are a barrier ")
+            print("between Terra, and Oblivion. You ascend to the heavens, and your power shrouds ")
+            print("the world. This marks a new age for Terra, who will you choose to become the ")
+            print("next demiurge?")
+            print("")
+            print("Thank you for playing! Game by: (GitHub) - ConGon")
+            print("")
+            print("You are now entering \"Endless Mode\"")
+            print("")
+            break
+
+        elif playerChoice == "N":
+            print("")
+            print("You decline Apollyon's offer to become the Demiurge. You watch as he fades ")
+            print("to dust... Eventually, you head back for the Theden Kingdom. On your travels, ")
+            print("you relive your past adventure, the enemies you defeated, the trinkets you ")
+            print("aquired, and the people you met along the way. You make it to the royal roads ")
+            print("of the kingdom, and on the side of the road you see a familiar face: George, ")
+            print("the travelling mercant! He greets you and asks for you to wait in his caravan ")
+            print("for moment. You see him riding his horse to the city, and he enters the gates.")
+            print("After what feels like an hour, he returns with with a royal steed. \"Get on!\" ")
+            print("George says, and so you do. You follow George through the gates, and people, as far ")
+            print("as the eye can see, are cheering your name. \"Hero!\", \"Dragon Slayer!\", just ")
+            print("some of the many things that the townspeople cheer. You are escorted to the royal ")
+            print("palace, where King Theden crowns you the kingdom's top adventurer. You live out ")
+            print("your days as a protector of the kingdom, the greatest adventurer that has ever lived...")
+            print("")
+            print("Thank you for playing! Game by: (GitHub) - ConGon")
+            print("")
+            print("You are now entering \"Endless Mode\"")
+            print("")
+            break
+
+        else:
+            print("")
+            print("Invalid Input")
+            print("")
+    
+
 #MARK: MAIN GAME LOOP!!!
 def gameLoop():
     global questStep, firstStep
-    print("Quest Step:", questStep)
+    print(questStep, "days have passed...")
+    print("")
+
     while True:
 
         if questStep == 0 and firstStep:
             print("It is the first step of your journey, so prepare for it. Take good note of your")
             print("current items, and good luck on your trecherous quest...")
             print("")
+
             firstStep = False
             
         elif questStep == trader1:
+            print("(You encountered the travelling mercant): Hello Traveller! Would you like to take a ")
+            print("look at my wares?")
             print("")
-            print("Hello adventurer! Would you like to take a look at my wares?")
-            print("")
+
             tradeMenu()
-            #shopkeeper function here
 
         elif questStep == trader2:
+            print("(You encountered the travelling mercant): Greetings Traveller! Fancy seeing you again!")
+            print("I have brought wares of a more suitable quality than before.")
+            print("")
+
             tradeMenu()
-            #shopkeeper function here
 
         elif questStep == goblinLordEncounter:
-            print("You hear cackling and malicious laughter from behind you")
+            print("You hear cackling and malicious laughter from behind you... As you turn ")
+            print("around to look behind you, the tall goblin lunges forward, giving you little ")
+            print("time to prepare for its assault!")
+            print("")
+
             combat("Goblin Lord")
 
         elif questStep == trader3:
+            print("(You encountered the travelling mercant): Fancy seeing you again, Traveller! ")
+            print("I see you have slain the Goblin Lord! I have a fresh shipment of wares from ")
+            print("the South Isles! These wares are of great quality.")
+            print("")
+
             tradeMenu()
 
         elif questStep == darkSorcererEncounter:
-            print("Second miniboss here")
+            print("You sense a darkness on the path ahead... As you walk through the briars and ")
+            print("tall brush, the presence becomes stronger. You begin to hear Maniacal ravings, ")
+            print("there is something evil ahead, something that now notices you. You ready your ")
+            print("weapon, and ready yourself for battle...")
+            print("")
+
             combat("Dark Sorcerer")
 
         elif questStep == trader4:
+            print("(You encountered the travelling mercant): Traveller! The dark presence that ") 
+            print("I once felt in these forests has seemingly vanished... Regaurdless, I have ")
+            print("aquired stunning wares on my way to supply the Theden Kingdom, wares of ")
+            print("exceptional quality!")
+            print("")
+
             tradeMenu()
 
         elif questStep == stoneGolemEncounter: 
-            print("Third miniboss here")
+            print("As you walk forward, a clearing in the forest emerges. You find yourself ")
+            print("moving towards a strange rock formation. You climb it and set your gaze upon ")
+            print("the beautiful landscape. It is verdant green steppes, where sheep and cattle ")
+            print("graze peacefully. As you are looking out unto the horizon, the ground begins ")
+            print("to violently shake, the stone upon which you sit is moving! You quickly jump ")
+            print("off of the stone, which has now fully emerged from the ground. You quickly ")
+            print("prepare to face it it in battle!")
+            print("")
+
             combat("Stone Golem")
 
         elif questStep == trader5:
+            print("(You encountered the travelling mercant): Hello again, Traveller! I have ")
+            print("of your great victory! The Golem is a formiddable foe, one that has defeated ")
+            print("many adventurers before you. But alas, I have come with wares fit for a lord...")
+            print("")
+
             tradeMenu()
 
         elif questStep == dragonEncounter:
-            print("Final miniboss goes here")
+            print("You find yourself at the precipice of a great mountian, the sweeping winds ")
+            print("howling, almost as if they becon you forward. You heed the wind's call, and ")
+            print("continue forward. You make it to what looks to be a ginormous nest, with ")
+            print("gold and plunder scattered throughout. You hear something, something large ")
+            print("soaring through the air. It pierced the clouds, then landed in front of you, ")
+            print("it is a Dragon, a thing of legends. You ready yourself, for this battle shall ")
+            print("be etched in legend...")
+            print("")
+
             combat("Dragon")
 
         elif questStep == trader6:
-            print("Greetings hero! You should take a look at my wares, as")
-            print("I found a suit of divine armor that would be well suited for your task...")
-            print("It is Armátoma tou Asymvívastou, or Armor of the Unyielding as it is called in legend.") 
-            print("It shall fit a man like you perfectly, as long as you have the coin...")
+            print("(You encountered the travelling mercant): You did it traveller... You did it! ")
+            print("You have slain the dragon, the beast that has terrorized the Theden Kingdom ")
+            print("so long. You are a Hero, adventurer. Alas, I found a suit of demonic armor ")
+            print("that would be well suited for your task... It is Armátoma tou Asymvívastou, ")
+            print("or Armor of the Unyielding as it is called in legend. It shall fit a man like ") 
+            print("you perfectly. These wares are of divine quality...")
+            print("")
+
             tradeMenu()
 
         elif questStep == demonLordEncounter:
-            print("player reached quest step 65, final boss goes here")
+            print("You approached the gates, the place where It resides... And out It came, Its ")
+            print("sword was wicked, imbued with foul magics. Its armor was Its thickened hide, ")
+            print("and from legends: impenetrable. It was as if the world rejected Its every step, ")
+            print("as the wind stirred and pushed against It. It threw Its weapon into the sky, ")
+            print("and with a crack, it cut through the air, \"Silence\" the Devil uttered, \"The ")
+            print("earth, the wind, the fire... I have long since hidden from them, but it seems ")
+            print("they have sent their finest warrior to destroy me. Let's see who the gods now")
+            print("favor, I am very curious.\"")
+            print("")
+
             combat("Demon Lord")
 
         elif questStep == trader7:
-            print("Shopkeeper goes here, or a selection of random events specific to each 5 quest steps.")
+            print("The Demon Lord is dead! You did it, Hero! From the heavenly realm, I have ")
+            print("gathered the finest arms and armor, I hope they are sufficient for a man ")
+            print("such as you. They are truly of divine quality.")
+            print("")
             tradeMenu()
 
         elif questStep == ApollyonEncounter:
-            print("From the highest reaches of the heavens, a being of unparalleled power descended.")
-            print("He pierced the firmament, shattered the skies, and crashed to the earth with a force that shook the world.")
-            print("Before you lies a vast crater, the ground torn asunder by the impact.")
-            print("The skies above churn with dark energy as a storm of unfathomable fury sweeps across the land.")
-            print("You stand firm, knowing this will be your final battle.")
+            print("From the highest reaches of the heavens, a being of unparalleled power descended. ")
+            print("He pierced the firmament, shattered the skies, and crashed to the ground with a ")
+            print("force that shook the world. Before you lies a vast crater, the ground torn asunder ")
+            print("by the impact. The skies above churn with dark energy as a storm of unfathomable ")
+            print("fury sweeps across the land. You stand firm, knowing this will be your final battle.")
             print("Through the swirling dust and roaring flames, the malevolent figure marched forward.")
             print("As the storm clears, all you know is this: an evil god now stands before you...")
+            print("")
 
             combat("Apollyon, Avatar Of Pride")
+
 
         playerChoice = str.upper(input("Move forward(M) | Equip Menu(E) | Rest(R) | Inventory(I) | Equipped Weapons & Armor(W) | Stats(S) | Help(H): "))
     
@@ -2011,7 +2123,6 @@ def moveForward():
             
         
         if eventProperties["Drops"] == None:
-            print("event has no drops")
             print("")
             levelUp()
 
@@ -2210,28 +2321,39 @@ def combat(enemySelected):
         if enemyProperties["Stats"]["Health"] <= 0:
 
             if enemySelected == "Goblin Lord":
-                print("You cut the goblin lord down like a dog... VICTORY!!!")
+                print("With a final blow, you separate the Goblin Lord's head ")
+                print("from his shoulders. You, too, collapse, but only from exhaustion.")
+                print("You wake and continue forward, there are many foes yet to come...")
 
             elif enemySelected == "Dark Sorcerer":
-                print("The dark sorcerer's pride went to his head, now he lies dead")
+                print("The Dark Sorcerer, in one final attempt, draws power from the depth ")
+                print("of his own soul, meaning to sacrifice himself to destroy you! Quickly, ")
+                print("you rush forward, and before he could draw more power, you plunged ")
+                print("your sword straight through his heart, killing him. You continue forward, ")
+                print("determined press on...")
 
             elif enemySelected == "Stone Golem":
-                print("The golem, in an avalanche of rock and boulders, crashes to the ground below")
+                print("The golem, in an avalanche of rock and boulders, crashes to the ground below.")
+                print("In legend it was said that the one to defeat the Stone Golem shall be the one ")
+                print("to free the world from evil. Those tall tales never interested you, though, and ")
+                print("so you continued forward, with the thoughts of the landscape ahead still lingering ")
+                print("in your mind...")
 
             elif enemySelected == "Dragon":
-                print("With a final strike, you peirce the dragon's scales, straight through it's heart.")
+                print("With a final strike, you pierce the dragon's scales, straight through it's heart.")
+                print("Dragonslayer, it is a title that few bear... You pull your sword out of it's thick ")
+                print("hide, and make your way down the mountian. You continue forward, with great determination.")
 
             elif enemySelected == "Demon Lord":
-                print("The demon lord wretches on it's own foul blood, \"You will see the grave mistake you've made, just kill me and let this world rot.\" \n You plunge your sword into his heart, and to black mist he faded.")
+                print("The Demon Lord wretches on It's own foul blood, \"You will see the ")
+                print("grave mistake you've made, just kill me and let this world rot.\"")
+                print("You plunge your sword into It's heart, and to black mist It faded.")
 
             elif enemySelected == "Apollyon, Avatar Of Pride": 
-                print("'You killed the final boss'")
-
-            # Dragon (Miniboss)
-
-            # Demon Lord (Final Boss)
-
-            # Apollyon, Avatar Of Pride (True Final Boss)
+                print("\"You will surpass me, child of Terra. I was once chosen by the Demiurge, ")
+                print("and now you must take my place, too. I wonder with whom you are aligned, ")
+                print("I am Pride, you must be Wrath. The world shall be renewed, Wrath...")
+                questEnd()
 
             else:
                 print("You defeated the", enemySelected)
@@ -2556,7 +2678,8 @@ def unequipItemMain(unequipItemInput):
     if unequipItemMain == None:
         print("")
         print("No item in that slot to unequip")
-        unequipItemInput()
+        print("")
+        return
 
     unequipItemName = unequipItemMain[0]
     unequipItemType = unequipItemMain[1]
@@ -2744,8 +2867,6 @@ def tradeDialogue():
        print("to aid you on this task, arms and armor of demonic make...")
        print("")
 
-# trader7 = 85
-# ApollyonEncounter = 100
     elif questStep == trader7:
         print("")
         print("You have slain the Demon Lord, you truly are the one from legend... I have ")
